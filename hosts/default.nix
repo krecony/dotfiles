@@ -6,6 +6,16 @@
 let
   inherit (self) inputs;
 
+  nixosImports = [
+    inputs.disko.nixosModules.disko
+    inputs.stylix.nixosModules.stylix
+    inputs.musnix.nixosModules.musnix
+    inputs.nix-mineral.nixosModules.nix-mineral
+    inputs.home-manager.nixosModules.home-manager
+  ];
+
+  hmImports = [ inputs.ags.homeManagerModules.ags ];
+
   hmModule =
     { config, ... }:
     {
@@ -23,7 +33,7 @@ let
               homeDirectory = "/home/${config.core.user}";
               stateVersion = "22.11";
             };
-            imports = builtins.attrValues self.homeManagerModules;
+            imports = hmImports;
           };
         };
       };
@@ -54,7 +64,7 @@ let
 
         ../modules
       ]
-      ++ builtins.attrValues self.nixosModules;
+      ++ nixosImports;
 
       specialArgs = {
         inherit inputs;

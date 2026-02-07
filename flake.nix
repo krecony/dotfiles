@@ -7,18 +7,6 @@
     {
       formatter = custom.forAllSystems (system: nixpkgs.legacyPackages.${system}.nixfmt-tree);
 
-      homeManagerModules = {
-        inherit (inputs.ags.homeManagerModules) ags;
-      };
-
-      nixosModules = {
-        inherit (inputs.disko.nixosModules) disko;
-        inherit (inputs.stylix.nixosModules) stylix;
-        inherit (inputs.musnix.nixosModules) musnix;
-        inherit (inputs.nix-mineral.nixosModules) nix-mineral;
-        inherit (inputs.home-manager.nixosModules) home-manager;
-      };
-
       nixosConfigurations = import ./hosts inputs;
 
       overlays = [
