@@ -1,11 +1,11 @@
 {
   outputs =
-    inputs@{ nixpkgs, systems, ... }:
+    inputs@{ nixpkgs, ... }:
     let
-      forAllSystems = nixpkgs.lib.genAttrs (import systems);
+      custom = import ./lib { inherit (nixpkgs) lib; };
     in
     {
-      formatter = forAllSystems (system: nixpkgs.legacyPackages.${system}.nixfmt-tree);
+      formatter = custom.forAllSystems (system: nixpkgs.legacyPackages.${system}.nixfmt-tree);
 
       homeManagerModules = {
         inherit (inputs.ags.homeManagerModules) ags;
@@ -20,6 +20,12 @@
       };
 
       nixosConfigurations = import ./hosts inputs;
+
+      overlays = [
+        (final: prev: {
+          lib = prev.lib.extend (self: super: { inherit custom; });
+        })
+      ];
     };
 
   inputs = {
@@ -27,7 +33,6 @@
     lmms-nixpkgs.url = "github:wizardlink/nixpkgs/lmms";
     musnix.url = "github:musnix/musnix";
     nix-mineral.url = "github:cynicsketch/nix-mineral";
-    systems.url = "github:nix-systems/default";
     home-manager.url = "github:nix-community/home-manager";
     nixvim.url = "github:mikaelfangel/nixvim-config";
     stylix.url = "github:danth/stylix";
