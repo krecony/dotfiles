@@ -12,6 +12,7 @@ let
     inputs.musnix.nixosModules.musnix
     inputs.nix-mineral.nixosModules.nix-mineral
     inputs.home-manager.nixosModules.home-manager
+    inputs.sops-nix.nixosModules.sops
   ];
 
   hmImports = [ inputs.ags.homeManagerModules.ags ];

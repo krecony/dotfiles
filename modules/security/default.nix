@@ -1,6 +1,7 @@
 {
   config,
   lib,
+  mkImports,
   ...
 }:
 with lib;
@@ -25,6 +26,10 @@ in
     };
     nix-mineral.enable = mkEnableOption "enable nix mineral";
   };
+
+  imports = mkImports [
+    ./sops.nix
+  ];
 
   config = {
     nix-mineral = {
