@@ -29,25 +29,10 @@
 
   preferences = {
     editor.package = inputs.nixvim.packages.${system}.default;
-    pdf = {
-      package = pkgs.papers;
-      desktopFile = "org.gnome.Papers.desktop";
-    };
-
-    video = {
-      package = pkgs.showtime;
-      desktopFile = "org.gnome.Showtime.desktop";
-    };
-
-    image = {
-      package = pkgs.loupe;
-      desktopFile = "org.gnome.Loupe.desktop";
-    };
-
-    browser = {
-      package = pkgs.mullvad-browser;
-      desktopFile = "mullvad-browser.desktop";
-    };
+    pdf.package = pkgs.papers;
+    video.package = pkgs.showtime;
+    image.package = pkgs.loupe;
+    browser.package = pkgs.mullvad-browser;
   };
 
   networking.vpn = {

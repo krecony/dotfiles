@@ -49,8 +49,16 @@ let
 
   mkHost =
     name: system:
-    nixpkgs.lib.nixosSystem {
+    nixpkgs.lib.nixosSystem rec {
       inherit system;
+
+      pkgs = import nixpkgs {
+        inherit system;
+        inherit (self) overlays;
+      };
+
+      inherit (pkgs) lib;
+
       modules = [
         {
           networking.hostName = name;
