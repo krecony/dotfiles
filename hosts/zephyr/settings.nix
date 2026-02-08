@@ -33,6 +33,7 @@
     video.package = pkgs.showtime;
     image.package = pkgs.loupe;
     browser.package = pkgs.mullvad-browser;
+    secondaryBrowser.package = pkgs.brave;
   };
 
   networking.vpn = {
@@ -68,7 +69,6 @@
 
     userPackages = with pkgs; [
       lmms
-      brave
 
       scenebuilder
 

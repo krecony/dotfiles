@@ -37,6 +37,7 @@ in
     };
 
     browser = mkDefaultApp pkgs.brave;
+    secondaryBrowser = mkDefaultApp null;
     pdf = mkDefaultApp pkgs.zathura;
     image = mkDefaultApp pkgs.imv;
     audio = mkDefaultApp pkgs.mpv;
@@ -90,7 +91,8 @@ in
       cfg.audio.package
       cfg.video.package
       cfg.terminal.package
-    ];
+    ]
+    ++ custom.ifNull [ ] [ cfg.secondaryBrowser.package ];
 
     hm.xdg = {
       enable = true;
