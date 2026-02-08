@@ -11,10 +11,10 @@ in
 {
   imports = mkImports [
     ./style.nix
-    ./gnome.nix
     ./fonts.nix
 
     ./hypr
+    ./gnome
   ];
 
   options.style = {
