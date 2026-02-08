@@ -25,6 +25,7 @@ in
       gnome = {
         core-os-services.enable = true;
         localsearch.enable = true;
+        gnome-keyring.enable = mkForce false;
 
         core-apps.enable = false;
         core-developer-tools.enable = false;
