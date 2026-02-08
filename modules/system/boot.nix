@@ -34,57 +34,65 @@ in
     quietBoot = mkEnableOption "adds kernelParams that reduce logging to the screen";
   };
 
-  config = {
-    boot = {
-      loader = {
-        systemd-boot = {
-          enable = mkDefault true;
-          consoleMode = mkDefault "auto";
+  config = mkMerge [
+    {
+      boot = {
+        loader = {
+          systemd-boot = {
+            enable = mkDefault true;
+            consoleMode = mkDefault "auto";
+          };
+          grub.enable = mkDefault false;
         };
-        grub.enable = mkDefault false;
+        initrd.systemd.enable = mkDefault true;
       };
-      initrd = {
-        verbose = mkDefault false;
-        systemd.enable = mkDefault true;
+    }
+    (mkIf cfg.diskEncryption {
+      boot = {
+        loader = {
+          grub = {
+            enable = mkForce true;
+            device = mkForce "nodev";
+            efiSupport = mkForce true;
+            enableCryptodisk = mkForce true;
+            extraGrubInstallArgs = mkForce [ "--modules=${moduleString}" ];
+          };
+          systemd-boot.enable = mkForce false;
+          efi = {
+            canTouchEfiVariables = mkForce true;
+            efiSysMountPoint = mkDefault "/efi";
+          };
+        };
+        initrd.systemd.enable = mkForce false;
       };
-      kernelParams = mkIf cfg.quietBoot [
-        "logo.nologo"
-        "fbcon=nodefer"
-        "bgrt_disable"
-        "vt.global_cursor_default=0"
-        "quiet"
-        "systemd.show_status=false"
-        "rd.udev.log_level=3"
-        "splash"
-      ];
-      consoleLogLevel = if cfg.quietBoot then 3 else 4;
-    };
-
-    environment.systemPackages = [ pkgs.tuigreet ];
-    services.greetd = {
-      enable = !config.services.displayManager.gdm.enable;
-      settings = {
-        default_session = {
-          command = "${getExe pkgs.greetd.tuigreet} --time --cmd Hyprland";
-          user = "greeter";
+    })
+    (mkIf cfg.quietBoot {
+      boot = {
+        kernelParams = mkForce [
+          "logo.nologo"
+          "fbcon=nodefer"
+          "bgrt_disable"
+          "vt.global_cursor_default=0"
+          "quiet"
+          "systemd.show_status=false"
+          "rd.udev.log_level=3"
+          "splash"
+        ];
+        consoleLogLevel = mkForce 3;
+        initrd.verbose = mkForce false;
+      };
+    })
+    (mkIf (!config.services.displayManager.gdm.enable) {
+      environment.systemPackages = [ pkgs.tuigreet ];
+      services.greetd = {
+        enable = true;
+        settings = {
+          default_session = {
+            command = "${getExe pkgs.greetd.tuigreet} --time --cmd Hyprland";
+            user = "greeter";
+          };
         };
       };
-    };
-  }
-  // mkIf cfg.diskEncryption {
-    boot.loader = {
-      grub = {
-        enable = mkForce true;
-        device = mkForce "nodev";
-        efiSupport = mkForce true;
-        enableCryptodisk = mkForce true;
-        extraGrubInstallArgs = mkForce [ "--modules=${moduleString}" ];
-      };
-      systemd-boot.enable = mkForce false;
-      efi = {
-        canTouchEfiVariables = mkForce true;
-        efiSysMountPoint = mkDefault "/efi";
-      };
-    };
-  };
+    })
+  ];
 }
