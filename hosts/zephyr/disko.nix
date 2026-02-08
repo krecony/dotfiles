@@ -1,7 +1,6 @@
 let
   mkOpts = sv: [
     "ssd"
-    "subvol=${sv}"
     "compress=zstd"
     "noatime"
   ];
@@ -48,7 +47,6 @@ in
                     mountOptions = [
                       "ssd"
                       "compress=no"
-                      "subvol=@boot"
                     ];
                   };
                   "@root" = {
@@ -74,7 +72,6 @@ in
                   "@swap" = {
                     mountpoint = "/swap";
                     mountOptions = [
-                      "subvol=@swap"
                       "compress=no"
                       "noatime"
                       "nodatacow"
