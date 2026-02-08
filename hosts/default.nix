@@ -1,6 +1,6 @@
 {
-  nixpkgs,
   self,
+  lib,
   ...
 }:
 let
@@ -49,15 +49,8 @@ let
 
   mkHost =
     name: system:
-    nixpkgs.lib.nixosSystem rec {
+    lib.nixosSystem rec {
       inherit system;
-
-      pkgs = import nixpkgs {
-        inherit system;
-        inherit (self) overlays;
-      };
-
-      inherit (pkgs) lib;
 
       modules = [
         {
@@ -75,8 +68,7 @@ let
       ++ nixosImports;
 
       specialArgs = {
-        inherit inputs;
-        inherit system;
+        inherit inputs system lib;
       };
     };
 in

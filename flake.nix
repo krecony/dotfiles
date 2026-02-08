@@ -1,19 +1,17 @@
 {
   outputs =
-    inputs@{ nixpkgs, ... }:
+    inputs@{
+      nixpkgs,
+      self,
+      ...
+    }:
     let
-      custom = import ./lib { inherit (nixpkgs) lib; };
+      lib = import ./lib { inherit inputs; };
     in
     {
-      formatter = custom.forAllSystems (system: nixpkgs.legacyPackages.${system}.nixfmt-tree);
+      formatter = lib.custom.forAllSystems (system: nixpkgs.legacyPackages.${system}.nixfmt-tree);
 
-      nixosConfigurations = import ./hosts inputs;
-
-      overlays = [
-        (final: prev: {
-          lib = prev.lib.extend (self: super: { inherit custom; });
-        })
-      ];
+      nixosConfigurations = import ./hosts { inherit lib self; };
     };
 
   inputs = {

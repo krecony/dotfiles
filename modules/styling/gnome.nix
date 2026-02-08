@@ -82,11 +82,12 @@ in
           www = "<Super>w";
         };
         "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0/" =
-          mkIf (config.preferences.secondaryBrowser != null) {
-            binding = "<Shift><Super>w";
-            command = getExe config.preferences.secondaryBrowser.package;
-            name = "Launch second browser";
-          };
+          mkIf (config.preferences.secondaryBrowser != null)
+            {
+              binding = "<Shift><Super>w";
+              command = getExe config.preferences.secondaryBrowser.package;
+              name = "Launch second browser";
+            };
         "org/gnome/shell/extensions/tilingshell" = {
           focus-window-down = "<Super>j";
           focus-window-left = "<Super>h";
