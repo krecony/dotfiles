@@ -44,7 +44,6 @@ in
           };
           grub.enable = mkDefault false;
         };
-        initrd.systemd.enable = mkDefault true;
       };
     }
     (mkIf cfg.diskEncryption {
@@ -63,7 +62,10 @@ in
             efiSysMountPoint = mkDefault "/efi";
           };
         };
-        initrd.systemd.enable = mkForce false;
+        initrd.systemd = {
+          enable = mkDefault true;
+          tpm2.enable = mkDefault true;
+        };
       };
     })
     (mkIf cfg.quietBoot {
