@@ -1,5 +1,6 @@
 { inputs, ... }:
-builtins // inputs.nixpkgs.lib.extend (
+builtins
+// inputs.nixpkgs.lib.extend (
   final: prev: {
     custom =
       let
@@ -29,10 +30,10 @@ builtins // inputs.nixpkgs.lib.extend (
           in
           if lib.pathExists appsDir then
             let
-              entries = builtins.readDir appsDir;
+              entries = lib.readDir appsDir;
 
               desktopFiles = lib.pipe entries [
-                builtins.attrNames
+                lib.attrNames
                 (lib.filter (name: lib.hasSuffix ".desktop" name))
               ];
             in

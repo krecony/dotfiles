@@ -8,7 +8,7 @@ with lib;
 let
   cfg = config.networking.vpn;
 
-  vpnScript = builtins.readFile ./vpn.sh;
+  vpnScript = lib.readFile ./vpn.sh;
 
   serverOpts = _: {
     options = {

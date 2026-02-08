@@ -93,7 +93,7 @@ let
   themes = import ./themes.nix pkgs;
 
   m = name: nameValuePair name { enable = !cfg.settings.autoEnable; };
-  mkTargets = targets: builtins.listToAttrs (map m targets);
+  mkTargets = targets: lib.listToAttrs (map m targets);
 in
 {
   options.style = {
@@ -116,8 +116,8 @@ in
   config = mkMerge [
     (mkIf (cfg.theme != null) {
       style.settings =
-        if builtins.hasAttr cfg.theme themes then
-          builtins.getAttr cfg.theme themes
+        if lib.hasAttr cfg.theme themes then
+          lib.getAttr cfg.theme themes
         else
           throw "the theme ${cfg.theme} doesn't exist!";
     })
@@ -161,7 +161,7 @@ in
 
           wayland.windowManager.hyprland.settings.env = [
             "HYPRCURSOR_THEME,${hyprcursor.name}"
-            "HYPRCURSOR_SIZE,${builtins.toString hyprcursor.size}"
+            "HYPRCURSOR_SIZE,${lib.toString hyprcursor.size}"
           ];
         };
     }

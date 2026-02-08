@@ -18,7 +18,7 @@ in
 
   config = {
     nixpkgs.config = lib.mkIf (cfg.unfreePackages != [ ]) {
-      allowUnfreePredicate = pkg: builtins.elem (lib.getName pkg) cfg.unfreePackages;
+      allowUnfreePredicate = pkg: lib.elem (lib.getName pkg) cfg.unfreePackages;
     };
 
     documentation = {

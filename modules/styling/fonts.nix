@@ -36,7 +36,7 @@
         dejavu_fonts
         saira-semi-condensed
       ]
-      ++ builtins.filter lib.attrsets.isDerivation (builtins.attrValues pkgs.nerd-fonts); # all nerd-fonts
+      ++ lib.filter lib.attrsets.isDerivation (lib.attrValues pkgs.nerd-fonts); # all nerd-fonts
     fontconfig = {
       defaultFonts = {
         monospace = [ "JetBrainsMono" ];

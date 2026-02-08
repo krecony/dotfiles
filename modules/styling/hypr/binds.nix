@@ -31,15 +31,15 @@ in
 
       ",XF86AudioMute, exec, wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle"
     ]
-    ++ (builtins.concatLists (
-      builtins.genList (
+    ++ (lib.concatLists (
+      lib.genList (
         x:
         let
           ws =
             let
               c = (x + 1) / 10;
             in
-            builtins.toString (x + 1 - (c * 10));
+            lib.toString (x + 1 - (c * 10));
         in
         [
           "${mod}, ${ws}, workspace, ${toString (x + 1)}"

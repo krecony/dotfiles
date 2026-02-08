@@ -17,7 +17,7 @@
               y = charToInt x;
             in
             if y >= 97 then y - 87 else y - 48;
-          merge-hex = x: y: builtins.toString ((builtins.elemAt x y) * 16 + (builtins.elemAt x (y + 1)));
+          merge-hex = x: y: lib.toString ((lib.elemAt x y) * 16 + (lib.elemAt x (y + 1)));
           s = map hex-to-dec (stringToCharacters (toLower x));
         in
         "rgb(${merge-hex s 0}, ${merge-hex s 2}, ${merge-hex s 4})";
