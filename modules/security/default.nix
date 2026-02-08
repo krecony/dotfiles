@@ -31,6 +31,8 @@ in
       inherit (cfg.nix-mineral) enable;
       preset = "compatibility";
 
+      filesystems.enable = false;
+
       extras = {
         misc = {
           usbguard = {
