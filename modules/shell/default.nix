@@ -24,7 +24,7 @@
     libqalculate
     gcc
     ffmpeg
-    toybox
+    coreutils-full
     inetutils
     wl-clipboard
   ];
