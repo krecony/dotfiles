@@ -72,6 +72,27 @@ in
           outer-gaps = 0;
           enable-tiling-system = true;
         };
+        "org/gnome/desktop/wm/keybindings".close = "<Super>q";
+        "org/gnome/settings-daemon/plugins/media-keys" = {
+          custom-keybindings = [
+            "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0/"
+          ];
+          home = "<Shift><Super>f";
+          screensaver = "<Shift><Super>l";
+          www = "<Super>w";
+        };
+        "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0/" =
+          mkIf (config.preferences.secondaryBrowser != null) {
+            binding = "<Shift><Super>w";
+            command = getExe config.preferences.secondaryBrowser.package;
+            name = "Launch second browser";
+          };
+        "org/gnome/shell/extensions/tilingshell" = {
+          focus-window-down = "<Super>j";
+          focus-window-left = "<Super>h";
+          focus-window-right = "<Super>l";
+          focus-window-up = "<Super>k";
+        };
       };
     };
   };
