@@ -84,6 +84,7 @@
       lmms
 
       proton-pass
+      protonmail-desktop
 
       scenebuilder
 
