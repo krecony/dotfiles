@@ -7,11 +7,6 @@
   ...
 }:
 {
-  hardware = {
-    enableRedistributableFirmware = true;
-    audio.enable = true;
-  };
-
   gaming.steam.enable = true;
 
   hardening = {
