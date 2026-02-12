@@ -15,6 +15,8 @@
     };
   };
 
+  gaming.steam.enable = true;
+
   hardening = {
     disableSUIDs = true;
     nix-mineral.enable = true;

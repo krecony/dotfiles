@@ -27,7 +27,12 @@ in
       settings.userPackages = [ cfg.minecraft.package ];
     })
     (mkIf cfg.steam.enable {
-      programs.steam.enable = true;
+      programs.steam = {
+        enable = true;
+        extraCompatPackages = with pkgs; [
+          proton-ge-bin
+        ];
+      };
       settings.nix.unfreePackages = [
         "steam"
         "steam-unwrapped"
