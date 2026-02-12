@@ -33,7 +33,7 @@ in
           proton-ge-bin
         ];
       };
-      settings.nix.unfreePackages = [
+      core.nix.unfreePackages = [
         "steam"
         "steam-unwrapped"
       ];

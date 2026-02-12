@@ -9,7 +9,7 @@
 {
   gaming.steam.enable = true;
 
-  hardening = {
+  security = {
     disableSUIDs = true;
     nix-mineral.enable = true;
   };
@@ -19,6 +19,17 @@
   core = {
     user = "krecony";
     flakePath = "/home/krecony/dotfiles";
+    boot = {
+      diskEncryption = true;
+      quietBoot = true;
+    };
+
+    nix.unfreePackages = [
+      "obsidian"
+      "spotify"
+      "pycharm"
+      "idea"
+    ];
   };
 
   preferences = {
@@ -66,16 +77,9 @@
     };
   };
 
-  programs = {
-    vscode.enable = true;
-  };
+  programs.vs-code.enable = true;
 
   settings = {
-    boot = {
-      diskEncryption = true;
-      quietBoot = true;
-    };
-
     userPackages = with pkgs; [
       proton-pass
       protonmail-desktop
@@ -97,13 +101,6 @@
 
       # nice latex alternative
       typst
-    ];
-
-    nix.unfreePackages = [
-      "obsidian"
-      "spotify"
-      "pycharm"
-      "idea"
     ];
   };
 

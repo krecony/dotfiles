@@ -5,10 +5,10 @@
 }:
 with lib;
 let
-  cfg = config.settings.nix;
+  cfg = config.core.nix;
 in
 {
-  options.settings.nix = {
+  options.core.nix = {
     unfreePackages = mkOption {
       default = [ ];
       type = types.listOf types.str;

@@ -5,17 +5,17 @@
 }:
 with lib;
 let
-  cfg = config.programs.vscode;
+  cfg = config.programs.vs-code;
 in
 {
-  options.programs.vscode.enable = mkEnableOption "enables vscode";
+  options.programs.vs-code.enable = mkEnableOption "enables vscode";
 
   config = mkIf cfg.enable {
     hm.programs.vscode = {
       enable = lib.mkDefault true;
     };
 
-    settings.nix.unfreePackages = [
+    core.nix.unfreePackages = [
       "vscode"
     ];
   };

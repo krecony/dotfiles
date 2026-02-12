@@ -27,6 +27,6 @@ in
     ];
     settings.userPackages = with pkgs; [ lmms ];
 
-    hardware.audio.enableAudioProduction = true;
+    core.audio.enableAudioProduction = true;
   };
 }

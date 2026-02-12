@@ -7,11 +7,11 @@
 }:
 with lib;
 let
-  cfg = config.system.audio;
+  cfg = config.core.audio;
 in
 {
-  options.system.audio = {
-    enable = mkBoolOption "enables sound on the device" true;
+  options.core.audio = {
+    enable = custom.mkBoolOption "enables sound on the device" true;
     enableAudioProduction = mkEnableOption "enables audio production features";
   };
 

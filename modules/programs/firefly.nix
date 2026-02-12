@@ -1,7 +1,6 @@
 {
   config,
   lib,
-  pkgs,
   ...
 }:
 with lib;
@@ -23,7 +22,7 @@ in
   };
 
   config = mkIf cfg.enable {
-    programs.mysql.enable = true;
+    programs.sql.mysql.enable = true;
     services = {
       firefly-iii = {
         enable = true;

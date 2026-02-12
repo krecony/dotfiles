@@ -26,7 +26,6 @@ let
 in
 {
   imports = mkImports [
-    ./core.nix
     ./preferences.nix
     ./gaming.nix
 
@@ -35,6 +34,6 @@ in
     ./security
     ./shell
     ./style
-    ./system
+    ./core
   ];
 }

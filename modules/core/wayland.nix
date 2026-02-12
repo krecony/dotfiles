@@ -4,11 +4,8 @@
   ...
 }:
 with lib;
-let
-  cfg = config.style.displayServer.wayland;
-in
 {
-  environment.variables = mkIf cfg.enable {
+  environment.variables = mkIf config.style.displayServer.wayland.enable {
     # make electron apps use wayland
     NIXOS_OZONE_WL = "1";
     # make anki use wayland

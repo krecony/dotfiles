@@ -6,7 +6,7 @@
 }:
 with lib;
 let
-  cfg = config.settings.boot;
+  cfg = config.core.boot;
   grubModules = [
     "part_gpt"
     "part_msdos"
@@ -29,7 +29,7 @@ let
   moduleString = concatStringsSep " " grubModules;
 in
 {
-  options.settings.boot = {
+  options.core.boot = {
     diskEncryption = mkEnableOption "encrypts the disk and makes UEFI encrypt it";
     quietBoot = mkEnableOption "adds kernelParams that reduce logging to the screen";
   };
