@@ -15,6 +15,7 @@ in
     ./foot.nix
     ./sql.nix
     ./vscode.nix
+    ./lmms.nix
   ];
 
   options.settings.userPackages = mkOption {

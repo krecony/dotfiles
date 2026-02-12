@@ -9,10 +9,7 @@
 {
   hardware = {
     enableRedistributableFirmware = true;
-    audio = {
-      enable = true;
-      enableAudioProduction = true;
-    };
+    audio.enable = true;
   };
 
   gaming.steam.enable = true;
@@ -81,8 +78,6 @@
     };
 
     userPackages = with pkgs; [
-      lmms
-
       proton-pass
       protonmail-desktop
 
@@ -123,18 +118,6 @@
   environment.systemPackages = with pkgs; [
     sof-firmware
     alsa-utils
-  ];
-
-  nixpkgs.overlays = [
-    (
-      _self: _super:
-      let
-        lmms-fix-pkgs = import inputs.lmms-nixpkgs { inherit system; };
-      in
-      {
-        inherit (lmms-fix-pkgs) lmms;
-      }
-    )
   ];
 
   users.users.${config.core.user}.initialHashedPassword =
