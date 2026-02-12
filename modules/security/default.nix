@@ -6,10 +6,10 @@
 }:
 with lib;
 let
-  cfg = config.hardening;
+  cfg = config.security;
 in
 {
-  options.hardening = {
+  options.security = {
     disableSUIDs = mkOption {
       type = types.bool;
       default = false;
@@ -29,6 +29,7 @@ in
 
   imports = mkImports [
     ./sops.nix
+    ./clamav.nix
   ];
 
   config = {

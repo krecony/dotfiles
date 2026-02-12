@@ -1,13 +1,22 @@
 {
   lib,
+  config,
   ...
 }:
+with lib;
+let
+  cfg = config.programs.vscode;
+in
 {
-  hm.programs.vscode = {
-    enable = lib.mkDefault true;
-  };
+  options.programs.vscode.enable = mkEnableOption "enables vscode";
 
-  settings.nix.unfreePackages = [
-    "vscode"
-  ];
+  config = mkIf cfg.enable {
+    hm.programs.vscode = {
+      enable = lib.mkDefault true;
+    };
+
+    settings.nix.unfreePackages = [
+      "vscode"
+    ];
+  };
 }

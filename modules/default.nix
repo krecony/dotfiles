@@ -34,7 +34,7 @@ in
     ./programs
     ./security
     ./shell
-    ./styling
+    ./style
     ./system
   ];
 }

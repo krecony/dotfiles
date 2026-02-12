@@ -6,14 +6,20 @@
 }:
 with lib;
 let
-  cfg = config.settings.sql;
+  cfg = config.programs.sql;
 in
 {
-  options.settings.sql = {
+  options.programs.sql = {
     postgresql.enable = mkEnableOption "enables postresql";
     pgadmin.enable = mkEnableOption "enables pgadmin";
+    mysql.enable = mkEnableOption "enables mysql";
   };
   config.services = {
+    mysql = {
+      inherit (cfg.mysql) enable;
+      package = pkgs.mariadb;
+    };
+
     postgresql = {
       inherit (cfg.postgresql) enable;
       authentication = pkgs.lib.mkOverride 10 ''

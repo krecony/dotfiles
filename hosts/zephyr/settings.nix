@@ -71,6 +71,10 @@
     };
   };
 
+  programs = {
+    vscode.enable = true;
+  };
+
   settings = {
     boot = {
       diskEncryption = true;

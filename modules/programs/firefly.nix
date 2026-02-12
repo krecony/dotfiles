@@ -6,10 +6,10 @@
 }:
 with lib;
 let
-  cfg = config.firefly-iii;
+  cfg = config.programs.firefly-iii;
 in
 {
-  options.firefly-iii = {
+  options.programs.firefly-iii = {
     enable = mkEnableOption "enables firefly-iii";
     databasePasswordFile = mkOption {
       type = types.str;
@@ -23,6 +23,7 @@ in
   };
 
   config = mkIf cfg.enable {
+    programs.mysql.enable = true;
     services = {
       firefly-iii = {
         enable = true;
@@ -73,8 +74,6 @@ in
       };
 
       mysql = {
-        enable = true;
-        package = pkgs.mariadb;
         ensureDatabases = [ "firefly" ];
         ensureUsers = [
           {
