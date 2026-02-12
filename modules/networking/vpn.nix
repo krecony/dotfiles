@@ -25,6 +25,11 @@ let
         default = "";
         example = "255.255.255.255:12345";
       };
+      privateKeyFile = mkOption {
+        type = types.nullOr types.str;
+        default = null;
+        example = "/run/protonvpn/server.key";
+      };
     };
   };
 in
@@ -41,11 +46,6 @@ in
     disabledIPs = mkOption {
       type = types.listOf types.str;
       default = [ ];
-    };
-    privateKeyDir = mkOption {
-      type = types.str;
-      default = "/root/vpn-keys";
-      example = "path/to/keys";
     };
     dns = mkOption {
       type = types.listOf types.str;
@@ -67,7 +67,6 @@ in
       };
       description = ''
         List of server definitions.
-        The key to each server is expected to be a file <privateKeyDir>/<server name>
       '';
     };
   };
@@ -115,9 +114,8 @@ in
             mkInterface =
               name: values:
               nameValuePair name {
-                inherit (values) autostart;
+                inherit (values) autostart privateKeyFile;
                 inherit (cfg) dns address;
-                privateKeyFile = "${cfg.privateKeyDir}/${name}";
                 listenPort = 51820;
                 mtu = 1280;
 

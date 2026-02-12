@@ -1,9 +1,16 @@
 { config, pkgs, ... }:
 {
   sops = {
-    defaultSopsFile = "${config.core.flakePath}/secrets.yaml";
+    defaultSopsFile = ../../secrets.yaml;
     defaultSopsFormat = "yaml";
     age.keyFile = "${config.hm.xdg.configHome}/sops/age/keys.txt";
+
+    secrets = {
+      "protonvpn/amsterdam" = { };
+      "protonvpn/warsaw" = { };
+      "protonvpn/berlin-sc" = { };
+      "protonvpn/miami" = { };
+    };
   };
 
   environment.systemPackages = with pkgs; [

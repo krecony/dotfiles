@@ -35,11 +35,11 @@
     video.package = pkgs.showtime;
     image.package = pkgs.loupe;
     browser.package = pkgs.mullvad-browser;
-    secondaryBrowser.package = pkgs.brave;
+    secondaryBrowser.package = pkgs.librewolf;
   };
 
   networking.vpn = {
-    enable = false; # temporarily until i get sops working
+    enable = true;
     useOfficialApp = false;
     disabledIPs = [
       # nixos.wiki gets mad
@@ -49,16 +49,27 @@
     ];
     dns = [ "10.2.0.1" ];
     address = [ "10.2.0.2/32" ];
-    privateKeyDir = "/root/protonvpn-keys";
     servers = {
+      amsterdam = {
+        autostart = true;
+        publicKey = "z/HHgg+ySsoW70+qihG2a++gxQBOXOFSCvscpcyEpg8=";
+        endpoint = "169.150.196.132:51820";
+        privateKeyFile = config.sops.secrets."protonvpn/amsterdam".path;
+      };
       warsaw = {
         publicKey = "wpfRQRhJirL++QclFH6SDhc+TuJJB4UxbCABy7A1tS4=";
         endpoint = "79.127.186.193:51820";
+        privateKeyFile = config.sops.secrets."protonvpn/warsaw".path;
       };
-      amsterdam = {
-        autostart = true;
-        publicKey = "afmlPt2O8Y+u4ykaOpMoO6q1JkbArZsaoFcpNXudXCg=";
-        endpoint = "46.29.25.3:51820";
+      berlin = {
+        publicKey = "gW9yJRNQgnWPUB0qbRjRGrnvbYOhPqypmp1cW961XEM=";
+        endpoint = "62.169.136.58:51820";
+        privateKeyFile = config.sops.secrets."protonvpn/berlin-sc".path;
+      };
+      miami = {
+        publicKey = "9JeNQPhigBfmRY0aAtRuqBklf8HVhTAyXZcv0I5vZBg=";
+        endpoint = "146.70.51.210:51820";
+        privateKeyFile = config.sops.secrets."protonvpn/miami".path;
       };
     };
   };
@@ -71,6 +82,8 @@
 
     userPackages = with pkgs; [
       lmms
+
+      proton-pass
 
       scenebuilder
 
