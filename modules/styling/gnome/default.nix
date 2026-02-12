@@ -39,6 +39,7 @@ in
       resources
       gnome-calendar
       gnome-clocks
+      gnome-disk-utility
     ];
 
     environment = {
