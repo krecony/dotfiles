@@ -70,29 +70,29 @@
         xz
         systemd
 
-        xorg.libXcomposite
-        xorg.libXtst
-        xorg.libXrandr
-        xorg.libXext
-        xorg.libX11
-        xorg.libXfixes
+        libXcomposite
+        libXtst
+        libXrandr
+        libXext
+        libX11
+        libXfixes
         libGL
         libva
         pipewire
-        xorg.libxcb
-        xorg.libXdamage
-        xorg.libxshmfence
-        xorg.libXxf86vm
+        libxcb
+        libXdamage
+        libxshmfence
+        libXxf86vm
         libelf
 
-        xorg.libXinerama
-        xorg.libXcursor
-        xorg.libXrender
-        xorg.libXScrnSaver
-        xorg.libXi
-        xorg.libSM
-        xorg.libICE
-        xorg.libXft
+        libXinerama
+        libXcursor
+        libXrender
+        libXScrnSaver
+        libXi
+        libSM
+        libICE
+        libXft
 
         glib
         gtk2
