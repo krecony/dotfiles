@@ -13,6 +13,9 @@ in
   config = mkIf cfg.enable {
     hm.programs.vscode = {
       enable = lib.mkDefault true;
+      userSettings = {
+       "security.workspace.trust.enabled" = false;
+      };
     };
 
     core.nix.unfreePackages = [
