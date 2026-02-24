@@ -12,8 +12,8 @@
     enable = true;
     settings = {
       user = {
-        name = "KreconyMakaron";
-        email = "55319736+KreconyMakaron@users.noreply.github.com";
+        name = "krecony";
+        email = "55319736+krecony@users.noreply.github.com";
       };
       init.defaultBranch = "main";
     };
