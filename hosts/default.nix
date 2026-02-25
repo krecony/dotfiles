@@ -74,6 +74,8 @@ let
     };
 in
 {
-  # huawei Laptop
+  # huawei laptop
   zephyr = mkHost "zephyr" "x86_64-linux";
+  # raspberry pi 3b+
+  hermes = mkHost "hermes" "aarch64-linux";
 }
