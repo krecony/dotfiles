@@ -14,7 +14,7 @@ in
     hm.programs.vscode = {
       enable = lib.mkDefault true;
       profiles.default.userSettings = {
-       "security.workspace.trust.enabled" = false;
+        "security.workspace.trust.enabled" = false;
       };
     };
 
