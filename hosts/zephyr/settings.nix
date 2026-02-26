@@ -153,4 +153,6 @@
   ];
 
   boot.kernelPackages = pkgs.linuxPackages_latest;
+
+  programs.podman.enable = true;
 }

@@ -16,6 +16,7 @@ in
     ./sql.nix
     ./vscode.nix
     ./lmms.nix
+    ./podman.nix
   ];
 
   options.settings.userPackages = mkOption {
