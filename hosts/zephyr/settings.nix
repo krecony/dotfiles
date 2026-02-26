@@ -49,6 +49,7 @@
       "172.67.75.217"
       "104.26.14.206"
       "104.26.15.206"
+      "150.171.22.12"
     ];
     dns = [ "10.2.0.1" ];
     address = [ "10.2.0.2/32" ];
@@ -88,7 +89,7 @@
 
       libreoffice-qt
       obsidian
-      anki
+      # anki
       spotify
       vesktop # discord client
 
@@ -96,8 +97,8 @@
       jetbrains.idea
 
       # pdf edditing with math
-      xournalpp
-      texliveFull
+      # xournalpp
+      # texliveFull
 
       # nice latex alternative
       typst
@@ -134,6 +135,16 @@
     };
     Install.WantedBy = [ "default.target" ];
   };
+
+  boot.binfmt.emulatedSystems = [
+    "aarch64-linux"
+  ];
+
+  nix.settings.trusted-users = [
+    "root"
+    "@wheel"
+    "${config.core.user}"
+  ];
 
   boot.kernelPackages = pkgs.linuxPackages_latest;
 }
