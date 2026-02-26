@@ -23,7 +23,7 @@
         "rgb(${merge-hex s 0}, ${merge-hex s 2}, ${merge-hex s 4})";
     in
     {
-      inherit (config.style.desktopEnvironment.Hyprland) enable;
+      enable = config.style.desktopEnvironment == "Hyprland";
 
       settings = {
         general = {

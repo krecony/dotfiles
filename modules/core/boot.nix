@@ -84,20 +84,17 @@ in
         initrd.verbose = mkForce false;
       };
     })
-    (mkIf
-      ((!config.services.displayManager.gdm.enable) && (config.style.displayServer != "headless"))
-      {
-        environment.systemPackages = [ pkgs.tuigreet ];
-        services.greetd = {
-          enable = true;
-          settings = {
-            default_session = {
-              command = "${getExe pkgs.tuigreet} --time --cmd Hyprland";
-              user = "greeter";
-            };
+    (mkIf ((!config.services.displayManager.gdm.enable) && (config.style.displayServer != "headless")) {
+      environment.systemPackages = [ pkgs.tuigreet ];
+      services.greetd = {
+        enable = true;
+        settings = {
+          default_session = {
+            command = "${getExe pkgs.tuigreet} --time --cmd Hyprland";
+            user = "greeter";
           };
         };
-      }
-    )
+      };
+    })
   ];
 }

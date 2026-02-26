@@ -19,24 +19,24 @@ in
 
   options.style = {
     displayServer = mkOption {
-      type = types.listOf (types.enum [
+      type = types.enum [
         "wayland"
         "x11"
         "headless"
-      ]);
+      ];
       default = "headless";
       description = "the display server to use";
     };
 
-    desktopEnvironment = {
-      Hyprland = {
-        enable = mkEnableOption "enables Hyprland";
-        default = true;
-      };
-      gnome = {
-        enable = mkEnableOption "enables the gnome desktop environment";
-        default = false;
-      };
+    desktopEnvironment = mkOption {
+      type = types.nullOr (
+        types.enum [
+          "Hyprland"
+          "gnome"
+        ]
+      );
+      default = null;
+      description = "the desktop environment to use";
     };
 
     widgets = {
@@ -50,7 +50,7 @@ in
     hm.services.ags = {
       inherit (cfg.widgets.ags) enable;
       hyprlandIntegration = {
-        inherit (cfg.desktop.Hyprland) enable;
+        enable = cfg.desktopEnvironment == "Hyprland";
         autostart.enable = true;
         keybinds.enable = true;
       };
@@ -76,7 +76,7 @@ in
           "ags shell"
         ]
         [
-          cfg.desktopEnvironment.Hyprland.enable
+          (cfg.desktopEnvironment == "Hyprland")
           "Hyprland"
         ]
       ];

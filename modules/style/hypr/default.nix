@@ -7,9 +7,6 @@
   ...
 }:
 with lib;
-let
-  cfg = config.style.desktopEnvironment.Hyprland;
-in
 {
   imports = mkImports [
     ./binds.nix
@@ -17,7 +14,7 @@ in
     ./hyprlock.nix
   ];
 
-  config = mkIf cfg.enable {
+  config = mkIf (config.style.desktopEnvironment == "Hyprland") {
     environment.etc."greetd/environments".text = ''
       Hyprland
     '';

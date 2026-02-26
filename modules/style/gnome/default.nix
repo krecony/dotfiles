@@ -6,8 +6,6 @@
 }:
 with lib;
 let
-  cfg = config.style.desktopEnvironment.gnome;
-
   extensions = with pkgs.gnomeExtensions; [
     appindicator # tray icons
     blur-my-shell # adds transparency and blur to gnome
@@ -18,7 +16,7 @@ let
   ];
 in
 {
-  config = mkIf cfg.enable {
+  config = mkIf (config.style.desktopEnvironment == "gnome") {
     services = {
       displayManager.gdm.enable = true;
       desktopManager.gnome.enable = true;
