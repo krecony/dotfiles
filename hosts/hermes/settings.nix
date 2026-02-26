@@ -8,10 +8,12 @@ with lib;
   core = {
     user = "pi";
     flakePath = "/home/pi/dotfiles";
+    capabilities = [
+      "basic"
+      "server"
+    ];
 
-    bluetooth.enable = false;
     intel.enable = false;
-    audio.enable = false;
   };
 
   boot.loader = {

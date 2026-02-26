@@ -11,8 +11,13 @@ let
 in
 {
   options.core.audio = {
-    enable = custom.mkBoolOption "enables sound on the device" true;
-    enableAudioProduction = mkEnableOption "enables audio production features";
+    enable = mkOption {
+      type = types.bool;
+      default = elem "desktop" config.core.capabilities;
+      example = false;
+      description = "Enables audio on the device";
+    };
+    enableAudioProduction = mkEnableOption "Enables audio production features";
   };
 
   config = mkIf cfg.enable {

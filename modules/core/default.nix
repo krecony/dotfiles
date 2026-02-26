@@ -42,6 +42,22 @@ in
       default = "zsh";
       description = "system shell";
     };
+    capabilities = mkOption {
+      type = types.listOf (
+        types.enum [
+          "basic"
+          "desktop"
+          "gaming"
+          "development"
+          "server"
+        ]
+      );
+      default = [ "basic" ];
+      description = ''
+        The capabilities the system has. Each capability enables some
+        opinionated modules and settings.
+      '';
+    };
   };
 
   config =

@@ -9,7 +9,12 @@ let
   cfg = config.core.bluetooth;
 in
 {
-  options.core.bluetooth.enable = custom.mkBoolOption "enables bluetooth on the device" true;
+  options.core.bluetooth.enable = mkOption {
+    type = types.bool;
+    default = elem "desktop" config.core.capabilities;
+    example = false;
+    description = "Enables bluetooth on the device";
+  };
 
   config = mkIf cfg.enable {
     hardware.bluetooth = {
