@@ -27,6 +27,9 @@ in
         enable = mkEnableOption "enables x11 (mutually exclusive with wayland)";
         default = false;
       };
+      headless = {
+        enable = mkEnableOption "configures no graphical interface";
+      };
     };
 
     desktopEnvironment = {

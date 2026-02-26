@@ -5,7 +5,8 @@
 }:
 {
   hm.programs.foot = {
-    enable = config.preferences.terminal.package == pkgs.foot;
+    enable =
+      config.preferences.terminal.package == pkgs.foot && (!config.style.displayServer.headless.enable);
     server.enable = false;
     settings = {
       main.pad = "8x8 center";

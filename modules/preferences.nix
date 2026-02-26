@@ -10,7 +10,7 @@ let
 
   mkDefaultApp = pkg: {
     package = mkOption {
-      type = types.package;
+      type = types.nullOr types.package;
       default = pkg;
     };
     desktopFile = mkOption {
@@ -73,65 +73,69 @@ in
     };
   };
 
-  config = {
-    environment = {
-      systemPackages = [
-        cfg.editor.package
-      ];
-      sessionVariables = {
-        BROWSER = "${getExe cfg.browser.package}";
-        EDITOR = "${getExe cfg.editor.package}";
+  config = mkMerge [
+    (mkIf (!config.style.displayServer.headless.enable) {
+      environment.sessionVariables.BROWSER = "${getExe cfg.browser.package}";
+
+      settings.userPackages = [
+        cfg.browser.package
+        cfg.pdf.package
+        cfg.image.package
+        cfg.audio.package
+        cfg.video.package
+        cfg.terminal.package
+      ]
+      ++ (optionals (cfg.secondaryBrowser.package != null) [ cfg.secondaryBrowser.package ]);
+
+      hm.xdg = {
+        enable = true;
+
+        userDirs = {
+          inherit (cfg.userDirs) enable;
+          createDirectories = false;
+        }
+        // cfg.userDirs;
+
+        mimeApps =
+          let
+            mkAssociations =
+              assoc: name:
+              custom.genAttrsSame assoc (
+                pipe name [
+                  (n: cfg.${name}.package)
+                  custom.getDesktopFile
+
+                  (custom.ifNull cfg.${name}.desktopFile)
+                  (custom.ifNull "")
+                ]
+              );
+
+            associations =
+              with custom.associations;
+              mergeAttrsList [
+                (mkAssociations browser "browser")
+                (mkAssociations pdf "pdf")
+                (mkAssociations audio "audio")
+                (mkAssociations image "image")
+                (mkAssociations video "video")
+              ];
+          in
+          {
+            inherit (cfg.mimeApps) enable;
+            defaultApplications = associations;
+            associations.added = associations;
+          };
       };
-    };
-
-    settings.userPackages = [
-      cfg.browser.package
-      cfg.pdf.package
-      cfg.image.package
-      cfg.audio.package
-      cfg.video.package
-      cfg.terminal.package
-    ]
-    ++ custom.ifNull [ ] [ cfg.secondaryBrowser.package ];
-
-    hm.xdg = {
-      enable = true;
-
-      userDirs = {
-        inherit (cfg.userDirs) enable;
-        createDirectories = false;
-      }
-      // cfg.userDirs;
-
-      mimeApps =
-        let
-          mkAssociations =
-            assoc: name:
-            custom.genAttrsSame assoc (
-              pipe name [
-                (n: cfg.${name}.package)
-                custom.getDesktopFile
-
-                (custom.ifNull cfg.${name}.desktopFile)
-                (custom.ifNull "")
-              ]
-            );
-
-          associations =
-            with custom.associations;
-            mergeAttrsList [
-              (mkAssociations browser "browser")
-              (mkAssociations pdf "pdf")
-              (mkAssociations audio "audio")
-              (mkAssociations image "image")
-              (mkAssociations video "video")
-            ];
-        in
-        {
-          inherit (cfg.mimeApps) enable;
-          defaultApplications = associations;
-          associations.added = associations;
+    })
+    {
+      environment = {
+        systemPackages = [
+          cfg.editor.package
+        ];
+        sessionVariables = {
+          EDITOR = "${getExe cfg.editor.package}";
         };
-    };
-  };
+      };
+    }
+  ];
 }
