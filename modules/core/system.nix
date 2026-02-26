@@ -48,10 +48,6 @@
   });
 
   programs = {
-    java = {
-      enable = true;
-      package = pkgs.openjdk25;
-    };
     nix-ld = {
       enable = true;
       libraries = with pkgs; [
