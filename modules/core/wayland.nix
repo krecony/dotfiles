@@ -5,7 +5,7 @@
 }:
 with lib;
 {
-  environment.variables = mkIf config.style.displayServer.wayland.enable {
+  environment.variables = mkIf (config.style.displayServer == "wayland") {
     # make electron apps use wayland
     NIXOS_OZONE_WL = "1";
     # make anki use wayland

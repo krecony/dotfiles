@@ -85,7 +85,7 @@ in
       };
     })
     (mkIf
-      ((!config.services.displayManager.gdm.enable) && (!config.style.displayServer.headless.enable))
+      ((!config.services.displayManager.gdm.enable) && (config.style.displayServer != "headless"))
       {
         environment.systemPackages = [ pkgs.tuigreet ];
         services.greetd = {

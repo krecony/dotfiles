@@ -24,7 +24,7 @@ with lib;
     lib.mkForce "$y$j9T$LNwI1pBYkqt/2GlSfVGNd0$vSOxb4cWF6OMWl/lOSHshHWQQdaVjW5LxSAEQJfgZ.C";
 
   style = {
-    displayServer.headless.enable = true;
+    displayServer = "headless";
     theme = "everforest";
   };
 }

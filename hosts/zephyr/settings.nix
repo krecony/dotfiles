@@ -108,7 +108,7 @@
   style = {
     theme = "everforest";
     desktopEnvironment.gnome.enable = true;
-    displayServer.wayland.enable = true;
+    displayServer = "wayland";
     widgets.ags.enable = false;
   };
 

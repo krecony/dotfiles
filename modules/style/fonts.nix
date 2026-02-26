@@ -5,7 +5,7 @@
   ...
 }:
 {
-  fonts = lib.mkIf (!config.style.displayServer.headless.enable) {
+  fonts = lib.mkIf (config.style.displayServer != "headless") {
     packages =
       with pkgs;
       let

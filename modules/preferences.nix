@@ -74,7 +74,7 @@ in
   };
 
   config = mkMerge [
-    (mkIf (!config.style.displayServer.headless.enable) {
+    (mkIf (config.style.displayServer != "headless") {
       environment.sessionVariables.BROWSER = "${getExe cfg.browser.package}";
 
       settings.userPackages = [
