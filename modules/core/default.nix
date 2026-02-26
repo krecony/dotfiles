@@ -67,7 +67,6 @@ in
             extraGroups = [
               "networkmanager"
               "wheel"
-              "bluetooth"
             ];
           };
         };
