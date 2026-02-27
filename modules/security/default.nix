@@ -43,7 +43,7 @@ in
         misc = {
           usbguard = {
             enable = true;
-            gnome-integration = true;
+            gnome-integration = config.style.desktopEnvironment == "gnome";
           };
           ssh-hardening = true;
         };
