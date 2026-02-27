@@ -6,6 +6,7 @@
 {
   imports = mkImports [
     ./vpn.nix
+    ./tailscale.nix
   ];
   # reduce SECLEVEL to connect to wifi
   systemd.services.wpa_supplicant.environment.OPENSSL_CONF = pkgs.writeText "openssl.cnf" ''

@@ -47,39 +47,42 @@
     secondaryBrowser.package = pkgs.librewolf;
   };
 
-  network.vpn = {
-    enable = true;
-    useOfficialApp = false;
-    disabledIPs = [
-      # nixos.wiki gets mad
-      "172.67.75.217"
-      "104.26.14.206"
-      "104.26.15.206"
-      "150.171.22.12"
-    ];
-    dns = [ "10.2.0.1" ];
-    address = [ "10.2.0.2/32" ];
-    servers = {
-      amsterdam = {
-        autostart = true;
-        publicKey = "z/HHgg+ySsoW70+qihG2a++gxQBOXOFSCvscpcyEpg8=";
-        endpoint = "169.150.196.132:51820";
-        privateKeyFile = config.sops.secrets."protonvpn/amsterdam".path;
-      };
-      warsaw = {
-        publicKey = "wpfRQRhJirL++QclFH6SDhc+TuJJB4UxbCABy7A1tS4=";
-        endpoint = "79.127.186.193:51820";
-        privateKeyFile = config.sops.secrets."protonvpn/warsaw".path;
-      };
-      berlin = {
-        publicKey = "gW9yJRNQgnWPUB0qbRjRGrnvbYOhPqypmp1cW961XEM=";
-        endpoint = "62.169.136.58:51820";
-        privateKeyFile = config.sops.secrets."protonvpn/berlin-sc".path;
-      };
-      miami = {
-        publicKey = "9JeNQPhigBfmRY0aAtRuqBklf8HVhTAyXZcv0I5vZBg=";
-        endpoint = "146.70.51.210:51820";
-        privateKeyFile = config.sops.secrets."protonvpn/miami".path;
+  network = {
+    tailscale.enable = true;
+    vpn = {
+      enable = true;
+      useOfficialApp = false;
+      disabledIPs = [
+        # nixos.wiki gets mad
+        "172.67.75.217"
+        "104.26.14.206"
+        "104.26.15.206"
+        "150.171.22.12"
+      ];
+      dns = [ "10.2.0.1" ];
+      address = [ "10.2.0.2/32" ];
+      servers = {
+        amsterdam = {
+          autostart = true;
+          publicKey = "z/HHgg+ySsoW70+qihG2a++gxQBOXOFSCvscpcyEpg8=";
+          endpoint = "169.150.196.132:51820";
+          privateKeyFile = config.sops.secrets."protonvpn/amsterdam".path;
+        };
+        warsaw = {
+          publicKey = "wpfRQRhJirL++QclFH6SDhc+TuJJB4UxbCABy7A1tS4=";
+          endpoint = "79.127.186.193:51820";
+          privateKeyFile = config.sops.secrets."protonvpn/warsaw".path;
+        };
+        berlin = {
+          publicKey = "gW9yJRNQgnWPUB0qbRjRGrnvbYOhPqypmp1cW961XEM=";
+          endpoint = "62.169.136.58:51820";
+          privateKeyFile = config.sops.secrets."protonvpn/berlin-sc".path;
+        };
+        miami = {
+          publicKey = "9JeNQPhigBfmRY0aAtRuqBklf8HVhTAyXZcv0I5vZBg=";
+          endpoint = "146.70.51.210:51820";
+          privateKeyFile = config.sops.secrets."protonvpn/miami".path;
+        };
       };
     };
   };
