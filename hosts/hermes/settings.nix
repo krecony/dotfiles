@@ -6,8 +6,8 @@
 with lib;
 {
   core = {
-    user = "pi";
-    flakePath = "/home/pi/dotfiles";
+    user = "hermes";
+    flakePath = "/home/hermes/dotfiles";
     capabilities = [
       "basic"
       "server"
@@ -36,4 +36,6 @@ with lib;
 
   security.nix-mineral.enable = true;
   nix-mineral.extras.misc.usbguard.enable = mkForce false;
+
+  network.tailscale.enable = true;
 }
