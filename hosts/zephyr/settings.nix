@@ -146,12 +146,6 @@
     "aarch64-linux"
   ];
 
-  nix.settings.trusted-users = [
-    "root"
-    "@wheel"
-    "${config.core.user}"
-  ];
-
   boot.kernelPackages = pkgs.linuxPackages_latest;
 
   programs.podman.enable = true;

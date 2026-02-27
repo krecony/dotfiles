@@ -1,6 +1,7 @@
 {
   config,
   lib,
+  user,
   ...
 }:
 with lib;
@@ -49,6 +50,11 @@ in
         experimental-features = [
           "nix-command"
           "flakes"
+        ];
+
+        trusted-users = [
+          "@wheel"
+          "${user}"
         ];
 
         substituters = [
