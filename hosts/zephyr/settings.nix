@@ -47,7 +47,7 @@
     secondaryBrowser.package = pkgs.librewolf;
   };
 
-  networking.vpn = {
+  network.vpn = {
     enable = true;
     useOfficialApp = false;
     disabledIPs = [

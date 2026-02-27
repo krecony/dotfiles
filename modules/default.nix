@@ -29,7 +29,7 @@ in
     ./preferences.nix
     ./gaming.nix
 
-    ./networking
+    ./network
     ./programs
     ./security
     ./shell
