@@ -23,13 +23,15 @@ in
       gnome = {
         core-os-services.enable = true;
         localsearch.enable = true;
-        gnome-keyring.enable = mkForce false;
+        gnome-keyring.enable = true;
 
         core-apps.enable = false;
         core-developer-tools.enable = false;
         games.enable = false;
       };
     };
+
+    security.pam.services.login.enableGnomeKeyring = config.services.gnome.gnome-keyring.enable;
 
     settings.userPackages = with pkgs; [
       baobab
