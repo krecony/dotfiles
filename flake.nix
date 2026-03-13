@@ -37,25 +37,66 @@
   inputs = {
     nixpkgs.url = "nixpkgs/nixos-unstable";
     lmms-nixpkgs.url = "github:wizardlink/nixpkgs/lmms";
-    musnix.url = "github:musnix/musnix";
-    nix-mineral.url = "github:cynicsketch/nix-mineral";
-    home-manager.url = "github:nix-community/home-manager";
-    nixvim.url = "github:mikaelfangel/nixvim-config";
-    stylix.url = "github:danth/stylix";
-    ags.url = "github:KreconyMakaron/ags";
-    polymc.url = "github:PolyMC/PolyMC";
-    disko.url = "github:nix-community/disko";
+
+    musnix = {
+      url = "github:musnix/musnix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+    nix-mineral = {
+      url = "github:cynicsketch/nix-mineral";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+    home-manager = {
+      url = "github:nix-community/home-manager";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+    nixvim = {
+      url = "github:mikaelfangel/nixvim-config";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+    stylix = {
+      url = "github:danth/stylix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+    ags = {
+      url = "github:KreconyMakaron/ags";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+    polymc = {
+      url = "github:PolyMC/PolyMC";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+    disko = {
+      url = "github:nix-community/disko";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
     git-hooks = {
       url = "github:cachix/git-hooks.nix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    sops-nix.url = "github:Mic92/sops-nix";
+    sops-nix = {
+      url = "github:Mic92/sops-nix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+    # doesn't use nixpkgs
     nixos-hardware.url = "github:NixOS/nixos-hardware/master";
 
     #https://github.com/hyprwm/Hyprland/issues/5891
-    hyprland.url = "git+https://github.com/hyprwm/Hyprland?submodules=1";
-    xdg-portal-hyprland.url = "github:hyprwm/xdg-desktop-portal-hyprland";
-    hyprcontrib.url = "github:hyprwm/contrib";
-    hyprlock.url = "github:hyprwm/hyprlock";
+    hyprland = {
+      url = "git+https://github.com/hyprwm/Hyprland?submodules=1";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+    xdg-portal-hyprland = {
+      url = "github:hyprwm/xdg-desktop-portal-hyprland";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+    hyprcontrib = {
+      url = "github:hyprwm/contrib";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+    hyprlock = {
+      url = "github:hyprwm/hyprlock";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 }
