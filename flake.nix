@@ -26,6 +26,7 @@
     polymc.url = "github:PolyMC/PolyMC";
     disko.url = "github:nix-community/disko";
     sops-nix.url = "github:Mic92/sops-nix";
+    nixos-hardware.url = "github:NixOS/nixos-hardware/master";
 
     #https://github.com/hyprwm/Hyprland/issues/5891
     hyprland.url = "git+https://github.com/hyprwm/Hyprland?submodules=1";

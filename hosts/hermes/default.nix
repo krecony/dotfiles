@@ -2,12 +2,14 @@
   config,
   lib,
   pkgs,
+  inputs,
   modulesPath,
   ...
 }:
 {
   imports = [
     (modulesPath + "/installer/scan/not-detected.nix")
+    inputs.nixos-hardware.nixosModules.raspberry-pi-3
     ./settings.nix
   ];
 
