@@ -1,6 +1,7 @@
 {
   outputs =
     inputs@{
+      git-hooks,
       nixpkgs,
       self,
       ...
@@ -10,6 +11,25 @@
     in
     {
       formatter = lib.custom.forAllSystems (system: nixpkgs.legacyPackages.${system}.nixfmt-tree);
+
+      checks = lib.custom.forAllSystems (
+        system:
+        import ./checks.nix {
+          inherit
+            system
+            self
+            git-hooks
+            lib
+            ;
+        }
+      );
+
+      devShells = lib.custom.forAllSystems (
+        system:
+        import ./devshell.nix {
+          inherit system nixpkgs self;
+        }
+      );
 
       nixosConfigurations = import ./hosts { inherit lib self; };
     };
@@ -25,6 +45,10 @@
     ags.url = "github:KreconyMakaron/ags";
     polymc.url = "github:PolyMC/PolyMC";
     disko.url = "github:nix-community/disko";
+    git-hooks = {
+      url = "github:cachix/git-hooks.nix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
     sops-nix.url = "github:Mic92/sops-nix";
     nixos-hardware.url = "github:NixOS/nixos-hardware/master";
 
