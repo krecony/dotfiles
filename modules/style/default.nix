@@ -15,6 +15,7 @@ in
 
     ./hypr
     ./gnome
+    ./extra
   ];
 
   options.style = {
@@ -38,24 +39,9 @@ in
       default = null;
       description = "the desktop environment to use";
     };
-
-    widgets = {
-      ags = {
-        enable = mkEnableOption "enables my ags shell";
-      };
-    };
   };
 
   config = {
-    hm.services.ags = {
-      inherit (cfg.widgets.ags) enable;
-      hyprlandIntegration = {
-        enable = cfg.desktopEnvironment == "Hyprland";
-        autostart.enable = true;
-        keybinds.enable = true;
-      };
-    };
-
     programs.xwayland.enable = cfg.displayServer == "wayland";
 
     assertions =
@@ -71,10 +57,6 @@ in
           map (x: mkAssertion (elemAt x 0) (elemAt x 1)) list;
       in
       workOnWayland [
-        [
-          cfg.widgets.ags.enable
-          "ags shell"
-        ]
         [
           (cfg.desktopEnvironment == "Hyprland")
           "Hyprland"

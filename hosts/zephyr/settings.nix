@@ -118,7 +118,6 @@
     theme = "everforest";
     desktopEnvironment = "gnome";
     displayServer = "wayland";
-    widgets.ags.enable = false;
   };
 
   environment.systemPackages = with pkgs; [
