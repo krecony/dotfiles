@@ -73,6 +73,7 @@ in
 
   config = mkIf cfg.enable (mkMerge [
     {
+      networking.firewall.checkReversePath = false;
       systemd.services.NetworkManager-wait-online.enable = true;
     }
     # official app
@@ -81,7 +82,6 @@ in
         wireguard-tools
         protonvpn-gui
       ];
-      networking.firewall.checkReversePath = false;
 
       hm.systemd.user.services.protonvpn-autostart = {
         Unit = {
@@ -108,8 +108,17 @@ in
       networking = {
         wg-quick.interfaces =
           let
-            IPs = concatStringsSep " " cfg.disabledIPs;
+            disabled = map (ip: if hasInfix "/" ip then ip else "${ip}/32") cfg.disabledIPs;
+            IPs = concatStringsSep " " disabled;
             tableID = "200";
+            tailscaleRules = optionalString config.network.tailscale.enable ''
+              ip rule add to 100.64.0.0/10 lookup 52 priority 90 || true
+              ip -6 rule add to fd7a:115c:a1e0::/48 lookup 52 priority 90 || true
+            '';
+            tailscaleRulesCleanup = optionalString config.network.tailscale.enable ''
+              ip rule del to 100.64.0.0/10 lookup 52 priority 90 || true
+              ip -6 rule del to fd7a:115c:a1e0::/48 lookup 52 priority 90 || true
+            '';
 
             mkInterface =
               name: values:
@@ -147,16 +156,20 @@ in
                 postUp = ''
                   set -euo pipefail
 
+                  ${tailscaleRules}
+
                   for ip in ${IPs}; do
-                    ip rule add to "$ip"/32 lookup ${tableID} priority 100 || true
+                    ip rule add to "$ip" lookup ${tableID} priority 100 || true
                   done
                 '';
 
                 postDown = ''
                   set -euo pipefail
 
+                  ${tailscaleRulesCleanup}
+
                   for ip in ${IPs}; do
-                    ip rule del to "$ip"/32 lookup ${tableID} priority 100 || true
+                    ip rule del to "$ip" lookup ${tableID} priority 100 || true
                   done
 
                   ip route flush table ${tableID} || true
