@@ -1,21 +1,34 @@
-{ config, pkgs, ... }:
 {
-  sops = {
-    defaultSopsFile = ../../secrets.yaml;
-    defaultSopsFormat = "yaml";
-    age.keyFile = "${config.hm.xdg.configHome}/sops/age/keys.txt";
+  config,
+  pkgs,
+  lib,
+  ...
+}:
+with lib;
+let
+  cfg = config.security.sops;
+in
+{
+  options.security.sops.enable = custom.mkBoolOption "enables sops secret managment" true;
 
-    useSystemdActivation = true;
+  config = mkIf cfg.enable {
+    sops = {
+      defaultSopsFile = ../../secrets.yaml;
+      defaultSopsFormat = "yaml";
+      age.keyFile = "${config.hm.xdg.configHome}/sops/age/keys.txt";
 
-    secrets = {
-      "protonvpn/amsterdam" = { };
-      "protonvpn/warsaw" = { };
-      "protonvpn/berlin-sc" = { };
-      "protonvpn/miami" = { };
+      useSystemdActivation = true;
+
+      secrets = {
+        "protonvpn/amsterdam" = { };
+        "protonvpn/warsaw" = { };
+        "protonvpn/berlin-sc" = { };
+        "protonvpn/miami" = { };
+      };
     };
-  };
 
-  environment.systemPackages = with pkgs; [
-    sops
-  ];
+    environment.systemPackages = with pkgs; [
+      sops
+    ];
+  };
 }
