@@ -24,7 +24,7 @@
     libqalculate
     gcc
     ffmpeg
-    coreutils-full
+    busybox
     inetutils
     wl-clipboard
   ];
