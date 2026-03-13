@@ -125,11 +125,12 @@ with lib;
       };
     };
 
-  assertions = [
-    {
-      assertion =
-        !(config.style.desktopEnvironment == "hyprland" && config.style.displayserver != "wayland");
-      message = "ags only works on wayland";
-    }
-  ];
+    assertions = [
+      {
+        assertion =
+          !(config.style.desktopEnvironment == "hyprland" && config.style.displayserver != "wayland");
+        message = "ags only works on wayland";
+      }
+    ];
+  };
 }
