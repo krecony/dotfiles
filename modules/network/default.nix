@@ -27,6 +27,7 @@
       enable = true;
       dns = "none";
       wifi.macAddress = "random";
+      wifi.powersave = false;
     };
 
     firewall.enable = true;
