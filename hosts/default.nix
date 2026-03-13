@@ -6,17 +6,6 @@
 let
   inherit (self) inputs;
 
-  nixosImports = [
-    inputs.disko.nixosModules.disko
-    inputs.stylix.nixosModules.stylix
-    inputs.musnix.nixosModules.musnix
-    inputs.nix-mineral.nixosModules.nix-mineral
-    inputs.home-manager.nixosModules.home-manager
-    inputs.sops-nix.nixosModules.sops
-  ];
-
-  hmImports = [ inputs.ags.homeManagerModules.ags ];
-
   hmModule =
     { config, ... }:
     {
@@ -34,7 +23,6 @@ let
               homeDirectory = "/home/${config.core.user}";
               stateVersion = "22.11";
             };
-            imports = hmImports;
           };
         };
       };
@@ -61,12 +49,14 @@ let
 
         ./${name}
 
+        inputs.home-manager.nixosModules.home-manager
+        inputs.disko.nixosModules.disko
+
         hmModule
         hmAliasModule
 
         ../modules
-      ]
-      ++ nixosImports;
+      ];
 
       specialArgs = {
         inherit inputs system lib;

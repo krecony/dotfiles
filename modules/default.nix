@@ -22,7 +22,14 @@ let
       inherit (config.lib.stylix) colors;
     };
 
-  mkImports = paths: lib.map mkImport paths;
+  mkImports =
+    imports:
+    let
+      split = lib.partition lib.isPath imports;
+      paths = split.right;
+      others = split.wrong;
+    in
+    (lib.map mkImport paths) ++ others;
 in
 {
   imports = mkImports [

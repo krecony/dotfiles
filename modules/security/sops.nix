@@ -2,6 +2,7 @@
   config,
   pkgs,
   lib,
+  inputs,
   ...
 }:
 with lib;
@@ -9,6 +10,10 @@ let
   cfg = config.security.sops;
 in
 {
+  imports = [
+    inputs.sops-nix.nixosModules.sops
+  ];
+
   options.security.sops.enable = custom.mkBoolOption "enables sops secret managment" true;
 
   config = mkIf cfg.enable {

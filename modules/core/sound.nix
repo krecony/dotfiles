@@ -3,6 +3,7 @@
   user,
   lib,
   config,
+  inputs,
   ...
 }:
 with lib;
@@ -19,6 +20,10 @@ in
     };
     enableAudioProduction = mkEnableOption "Enables audio production features";
   };
+
+  imports = [
+    inputs.musnix.nixosModules.musnix
+  ];
 
   config = mkIf cfg.enable {
     security.rtkit.enable = true;

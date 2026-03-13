@@ -2,6 +2,7 @@
   config,
   lib,
   mkImports,
+  inputs,
   ...
 }:
 with lib;
@@ -30,6 +31,7 @@ in
   imports = mkImports [
     ./sops.nix
     ./clamav.nix
+    inputs.nix-mineral.nixosModules.nix-mineral
   ];
 
   config = {

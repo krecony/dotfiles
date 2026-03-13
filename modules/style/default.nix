@@ -2,6 +2,7 @@
   mkImports,
   config,
   lib,
+  inputs,
   ...
 }:
 with lib;
@@ -16,6 +17,8 @@ in
     ./hypr
     ./gnome
     ./extra
+
+    inputs.stylix.nixosModules.stylix
   ];
 
   options.style = {
