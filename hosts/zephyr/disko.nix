@@ -1,5 +1,5 @@
 let
-  mkOpts = sv: [
+  opts = [
     "ssd"
     "compress=zstd"
     "noatime"
@@ -51,23 +51,23 @@ in
                   };
                   "@root" = {
                     mountpoint = "/";
-                    mountOptions = mkOpts "@root";
+                    mountOptions = opts;
                   };
                   "@home" = {
                     mountpoint = "/home";
-                    mountOptions = mkOpts "@home";
+                    mountOptions = opts;
                   };
                   "@nix" = {
                     mountpoint = "/nix";
-                    mountOptions = mkOpts "@nix";
+                    mountOptions = opts;
                   };
                   "@persist" = {
                     mountpoint = "/persist";
-                    mountOptions = mkOpts "@persist";
+                    mountOptions = opts;
                   };
                   "@log" = {
                     mountpoint = "/var/log";
-                    mountOptions = mkOpts "@log";
+                    mountOptions = opts;
                   };
                   "@swap" = {
                     mountpoint = "/swap";

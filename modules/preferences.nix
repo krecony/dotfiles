@@ -102,7 +102,7 @@ in
               assoc: name:
               custom.genAttrsSame assoc (
                 pipe name [
-                  (n: cfg.${name}.package)
+                  (_: cfg.${name}.package)
                   custom.getDesktopFile
 
                   (custom.ifNull cfg.${name}.desktopFile)
