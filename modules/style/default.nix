@@ -43,24 +43,5 @@ in
 
   config = {
     programs.xwayland.enable = cfg.displayServer == "wayland";
-
-    assertions =
-      let
-        workOnWayland =
-          list:
-          let
-            mkAssertion = attr: opt: {
-              assertion = !(attr && cfg.displayServer == "x11");
-              message = "${opt} only works on wayland!";
-            };
-          in
-          map (x: mkAssertion (elemAt x 0) (elemAt x 1)) list;
-      in
-      workOnWayland [
-        [
-          (cfg.desktopEnvironment == "Hyprland")
-          "Hyprland"
-        ]
-      ];
   };
 }
