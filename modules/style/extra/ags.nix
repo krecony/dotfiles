@@ -10,7 +10,7 @@ in
     hm.services.ags = {
       enable = true;
       hyprlandIntegration = {
-        enable = config.style.desktopEnvironment == "Hyprland";
+        enable = config.style.desktopEnvironment == "hyprland";
         autostart.enable = true;
         keybinds.enable = true;
       };

@@ -32,7 +32,7 @@ in
     desktopEnvironment = mkOption {
       type = types.nullOr (
         types.enum [
-          "Hyprland"
+          "hyprland"
           "gnome"
         ]
       );

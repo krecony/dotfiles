@@ -14,7 +14,7 @@ with lib;
     ./hyprlock.nix
   ];
 
-  config = mkIf (config.style.desktopEnvironment == "Hyprland") {
+  config = mkIf (config.style.desktopEnvironment == "hyprland") {
     environment.etc."greetd/environments".text = ''
       Hyprland
     '';
@@ -125,12 +125,11 @@ with lib;
       };
     };
 
-    assertions = [
-      {
-        assertion =
-          !(config.style.desktopEnvironment == "hyprland" && config.style.displayserver != "wayland");
-        message = "ags only works on wayland";
-      }
-    ];
-  };
+  assertions = [
+    {
+      assertion =
+        !(config.style.desktopEnvironment == "hyprland" && config.style.displayserver != "wayland");
+      message = "ags only works on wayland";
+    }
+  ];
 }

@@ -8,7 +8,7 @@ let
 in
 {
   hm.services.hypridle = {
-    enable = config.style.desktopEnvironment == "Hyprland";
+    enable = config.style.desktopEnvironment == "hyprland";
 
     settings = {
       general = {
