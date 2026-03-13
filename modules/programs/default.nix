@@ -17,6 +17,7 @@ in
     ./vscode.nix
     ./lmms.nix
     ./podman.nix
+    ./nix-locate.nix
   ];
 
   options.settings.userPackages = mkOption {

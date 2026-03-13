@@ -87,7 +87,10 @@
     };
   };
 
-  programs.vs-code.enable = true;
+  programs = {
+    vs-code.enable = true;
+    nix-locate.enable = true;
+  };
 
   settings = {
     userPackages = with pkgs; [
