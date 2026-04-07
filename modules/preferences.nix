@@ -93,6 +93,7 @@ in
         userDirs = {
           inherit (cfg.userDirs) enable;
           createDirectories = false;
+          setSessionVariables = true;
         }
         // cfg.userDirs;
 
