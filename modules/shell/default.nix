@@ -1,6 +1,7 @@
 {
   pkgs,
   mkImports,
+  config,
   ...
 }:
 {
@@ -33,5 +34,6 @@
     enable = true;
     silent = true;
     nix-direnv.enable = true;
+    enableZshIntegration = config.core.shell == "zsh";
   };
 }
