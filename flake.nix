@@ -50,8 +50,8 @@
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    nixvim = {
-      url = "github:mikaelfangel/nixvim-config";
+    nvim = {
+      url = "github:krecony/nvim";
       inputs.nixpkgs.follows = "nixpkgs";
     };
     stylix = {

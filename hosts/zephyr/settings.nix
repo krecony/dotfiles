@@ -39,7 +39,7 @@
   };
 
   preferences = {
-    editor.package = inputs.nixvim.packages.${system}.default;
+    editor.package = inputs.nvim.packages.${system}.default;
     pdf.package = pkgs.papers;
     video.package = pkgs.showtime;
     image.package = pkgs.loupe;
