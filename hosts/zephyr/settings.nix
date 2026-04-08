@@ -31,6 +31,7 @@
     };
 
     nix.unfreePackages = [
+      "github-copilot-cli"
       "obsidian"
       "spotify"
       "pycharm"
@@ -107,6 +108,8 @@
 
       jetbrains.pycharm
       jetbrains.idea
+
+      github-copilot-cli
 
       # pdf edditing with math
       # xournalpp
