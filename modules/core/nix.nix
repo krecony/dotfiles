@@ -2,6 +2,7 @@
   config,
   lib,
   user,
+  pkgs,
   ...
 }:
 with lib;
@@ -45,6 +46,8 @@ in
         warn-dirty = false
         keep-derivations = true
       '';
+
+      package = pkgs.lixPackageSets.stable.lix;
 
       settings = {
         auto-optimise-store = true;
