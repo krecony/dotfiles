@@ -1272,11 +1272,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1775602617,
-        "narHash": "sha256-hGFQ95ig9vAYvURDkjDVxBLVuKX636DsRDN+FMi0bIE=",
+        "lastModified": 1776599990,
+        "narHash": "sha256-wp9iBQXm9JpUoWcqmwydQ8RHN7mag3GoITRmG/v+shU=",
         "owner": "krecony",
         "repo": "nvim",
-        "rev": "dec937460084c739a8a9cbb483d10fbdbb6f335d",
+        "rev": "05832ef9bf60ec743f9049bb425da2c408de2085",
         "type": "github"
       },
       "original": {
