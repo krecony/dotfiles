@@ -19,6 +19,7 @@ in
         default = pkgs.polymc;
       };
     };
+    lutris.enable = mkEnableOption "enables lutris";
   };
 
   config = mkMerge [
@@ -36,6 +37,20 @@ in
       core.nix.unfreePackages = [
         "steam"
         "steam-unwrapped"
+      ];
+    })
+    (mkIf cfg.lutris.enable {
+      hm.programs.lutris = {
+        enable = true;
+      };
+
+      # workaround for https://github.com/NixOS/nixpkgs/issues/516392
+      nixpkgs.overlays = [
+        (_: prev: {
+          openldap = prev.openldap.overrideAttrs {
+            doCheck = !prev.stdenv.hostPlatform.isi686;
+          };
+        })
       ];
     })
   ];

@@ -8,6 +8,7 @@
 }:
 {
   gaming.steam.enable = true;
+  gaming.lutris.enable = true;
 
   security = {
     disableSUIDs = true;
