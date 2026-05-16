@@ -53,6 +53,8 @@ in
       };
     };
 
+    services.jitterentropy-rngd.enable = mkForce false;
+
     security = mkIf cfg.disableSUIDs {
       wrappers = mkMerge [
         {

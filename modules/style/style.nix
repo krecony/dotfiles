@@ -124,6 +124,7 @@ in
     {
       stylix.targets.qt.platform = mkForce "qtct";
       qt.platformTheme = mkForce "gnome";
+      hm.gtk.gtk4.theme = mkForce config.hm.gtk.theme; # post 26.05 behaviour
     }
     {
       stylix = {
