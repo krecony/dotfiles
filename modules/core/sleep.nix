@@ -1,13 +1,13 @@
-{ ... }:
+{ lib, ... }:
 {
   services.logind = {
     settings = {
       Login = {
-        HandleLidSwitchDocked = "ignore";
-        HandleLidSwitch = "hybrid-sleep";
-        HandleLidSwitchExternalPower = "lock";
-        HandlePowerKey = "hybrid-sleep";
-        HandlePowerKeyLongPress = "reboot";
+        HandleLidSwitchDocked = lib.mkDefault "ignore";
+        HandleLidSwitch = lib.mkDefault "hybrid-sleep";
+        HandleLidSwitchExternalPower = lib.mkDefault "lock";
+        HandlePowerKey = lib.mkDefault "hybrid-sleep";
+        HandlePowerKeyLongPress = lib.mkDefault "reboot";
       };
     };
   };

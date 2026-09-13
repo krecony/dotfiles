@@ -75,7 +75,7 @@ in
       };
     };
     system = {
-      autoUpgrade.enable = false; # maybe change later?
+      autoUpgrade.enable = lib.mkDefault false; # maybe change later?
     };
   };
 }
