@@ -1,0 +1,76 @@
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
+{
+  core = {
+    user = "krecony";
+    flakePath = "/home/krecony/dotfiles";
+    # Avoid the existing Huawei-oriented forced i915 module and power workarounds.
+    intel.enable = false;
+    boot = {
+      bootloader = "systemd-boot"; # change to lanzaboote after creating keys
+      quietBoot = false;
+    };
+    impermanence = {
+      enable = true;
+      resetRoot = false; # enable after verifying all persistent mounts
+    };
+    nvidia = {
+      enable = false; # enable after setting both measured PCI bus IDs
+      intelBusId = "";
+      nvidiaBusId = "";
+    };
+  };
+  # Let kernel PCI probing choose i915/xe; do not inherit a forced i915 initrd load.
+  hardware.intelgpu.loadInInitrd = false;
+  hardware.intelgpu.vaapiDriver = "intel-media-driver";
+  hardware.enableRedistributableFirmware = true;
+  hardware.cpu.intel.updateMicrocode = true;
+  hardware.graphics.enable = true;
+  hardware.firmware = [ pkgs.sof-firmware ];
+
+  style = {
+    desktopEnvironment = "gnome";
+    displayServer = "wayland";
+    theme = "everforest";
+  };
+  preferences.browser = pkgs.firefox;
+  # The reviewed Home Manager pin is from the 25.05 era. Revisit only for a fresh aligned install.
+  hm.home.stateVersion = "25.05";
+
+  # Provision before nixos-install; this survives reset and works with mutableUsers=false.
+  users.users.${config.core.user} = {
+    initialHashedPassword = lib.mkForce "";
+  };
+  hardening.sops.enable = false; # provision the age identity before enabling SOPS/VPN
+  services.openssh.enable = lib.mkForce false; # opt in if remote access is required
+  # services.fwupd.enable = true;
+  # services.power-profiles-daemon.enable = true;
+  # services.tlp.enable = lib.mkForce false;
+
+  services.logind.settings.Login = {
+    HandleLidSwitch = "suspend";
+    HandlePowerKey = "suspend";
+  };
+  systemd.sleep.settings.Sleep = {
+    AllowHibernation = false;
+    AllowHybridSleep = false;
+    AllowSuspendThenHibernate = false;
+  };
+
+  zramSwap.enable = true;
+  environment.systemPackages = with pkgs; [
+    sbctl
+    cryptsetup
+    btrfs-progs
+    nvme-cli
+    pciutils
+    usbutils
+    tpm2-tools
+    alsa-utils
+    mokutil
+  ];
+}

@@ -21,7 +21,7 @@ let
             home = {
               username = config.core.user;
               homeDirectory = "/home/${config.core.user}";
-              stateVersion = "22.11";
+              stateVersion = lib.mkDefault "22.11";
             };
           };
         };
@@ -51,6 +51,8 @@ let
 
         inputs.home-manager.nixosModules.home-manager
         inputs.disko.nixosModules.disko
+        inputs.lanzaboote.nixosModules.lanzaboote
+        inputs.impermanence.nixosModules.impermanence
 
         hmModule
         hmAliasModule
@@ -64,6 +66,7 @@ let
     };
 in
 {
+  p14s = mkHost "p14s" "x86_64-linux";
   # huawei laptop
   zephyr = mkHost "zephyr" "x86_64-linux";
   # raspberry pi 3b+
