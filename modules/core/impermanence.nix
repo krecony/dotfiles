@@ -65,7 +65,10 @@ in
         after = [ "systemd-cryptsetup@cryptroot.service" ];
         requires = [ "systemd-cryptsetup@cryptroot.service" ];
         unitConfig.DefaultDependencies = false;
-        serviceConfig.Type = "oneshot";
+        serviceConfig = {
+					Type = "oneshot";
+					RemainAfterExit = true;
+				};
         path = [
           pkgs.btrfs-progs
           pkgs.coreutils
