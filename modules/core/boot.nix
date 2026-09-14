@@ -10,7 +10,7 @@ let
 in
 {
   options.core.boot = {
-    diskEncryption = mkEnableOption "legacy GRUB encrypted /boot support (deprecated)";
+    encryptedBootPartition = mkEnableOption "legacy GRUB encrypted /boot support (deprecated)";
     bootloader = mkOption {
       type = types.enum [
         "systemd-boot"
@@ -18,7 +18,7 @@ in
         "grub"
         "none"
       ];
-      default = if cfg.diskEncryption then "grub" else "systemd-boot";
+      default = if cfg.encryptedBootPartition then "grub" else "systemd-boot";
       description = "Bootloader selection; disk encryption is configured separately.";
     };
     pkiBundle = mkOption {
@@ -33,11 +33,11 @@ in
     {
       assertions = [
         {
-          assertion = !cfg.diskEncryption || cfg.bootloader == "grub";
+          assertion = !cfg.encryptedBootPartition || cfg.bootloader == "grub";
           message = "Legacy encrypted /boot requires GRUB. Define new layouts in the host's disko.nix.";
         }
       ];
-      warnings = optional cfg.diskEncryption "core.boot.diskEncryption is legacy encrypted-/boot support; do not use it for new hosts.";
+      warnings = optional cfg.encryptedBootPartition "core.boot.diskEncryption is legacy encrypted-/boot support; do not use it for new hosts.";
     }
     {
       boot = {
@@ -91,7 +91,7 @@ in
       };
       environment.systemPackages = [ pkgs.sbctl ];
     })
-    (mkIf cfg.diskEncryption {
+    (mkIf cfg.encryptedBootPartition {
       boot = let 
 				grubModules = [
 					"part_gpt"

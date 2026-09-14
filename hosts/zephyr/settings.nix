@@ -21,7 +21,7 @@
     user = "krecony";
     flakePath = "/home/krecony/dotfiles";
     boot = {
-      diskEncryption = true;
+      encryptedBootPartition = true;
       quietBoot = true;
     };
 
