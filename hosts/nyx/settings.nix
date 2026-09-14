@@ -2,6 +2,8 @@
   config,
   lib,
   pkgs,
+  inputs,
+  system,
   ...
 }:
 {
@@ -19,9 +21,9 @@
       resetRoot = false; # enable after verifying all persistent mounts
     };
     nvidia = {
-      enable = false; # enable after setting both measured PCI bus IDs
-      intelBusId = "";
-      nvidiaBusId = "";
+      enable = true; # enable after setting both measured PCI bus IDs
+      intelBusId = "PCI:0@0:2:0";
+      nvidiaBusId = "PCI:1@0:0:0";
     };
   };
   # Let kernel PCI probing choose i915/xe; do not inherit a forced i915 initrd load.
@@ -73,4 +75,6 @@
     alsa-utils
     mokutil
   ];
+
+  preferences.editor = inputs.nvim.packages.${system}.default;
 }

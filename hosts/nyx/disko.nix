@@ -29,7 +29,7 @@ in
 
   disko.devices.disk.system = {
     type = "disk";
-    device = "/dev/disk/by-id/REPLACE_WITH_LAPTOP_NVME_ID";
+    device = "/dev/disk/by-id/nvme-SKHynix_HFS001TFM9X179N_BSEBN75471030CB59";
     content = {
       type = "gpt";
       partitions = {
@@ -88,6 +88,14 @@ in
                   mountpoint = "/persist";
                   mountOptions = opts;
                 };
+		"@swap" = {
+		  mountpoint = "/swap";
+		  mountOptions = [ "noatime" ];
+		  swap.swapfile = {
+		    size = "16G";
+		    priority = 10;
+		  };
+		};
               };
               # Run after Disko creates the empty subvolumes, before installation.
               # Also create this when reset is disabled, so it can be enabled later.
