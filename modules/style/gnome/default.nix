@@ -64,7 +64,14 @@ in
         gnome-tour
         gnome-user-docs
       ];
-      systemPackages = [ pkgs.nautilus ] ++ extensions;
+      systemPackages =
+        with pkgs;
+        [
+          nautilus
+          xprop
+          xrdb
+        ]
+        ++ extensions;
     };
 
     services.udev.packages = [ pkgs.gnome-settings-daemon ];
