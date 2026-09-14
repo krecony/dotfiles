@@ -22,8 +22,6 @@ in
   ];
   boot.initrd.systemd.enable = true;
   boot.loader.efi = {
-    efiSysMountPoint = "/boot";
-    canTouchEfiVariables = lib.mkDefault true;
   };
 
   disko.devices.disk.system = {
