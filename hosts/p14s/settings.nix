@@ -43,7 +43,7 @@
 
   # Provision before nixos-install; this survives reset and works with mutableUsers=false.
   users.users.${config.core.user} = {
-    initialHashedPassword = lib.mkForce "";
+    initialHashedPassword = lib.mkForce "$y$j9T$Mecu6dd12rJtcZO7K3Dnb1$A2bSTBvYuwjLw4guSKVXIlhwoBvuvGZmxV6mygZ5rT.";
   };
   hardening.sops.enable = false; # provision the age identity before enabling SOPS/VPN
   services.openssh.enable = lib.mkForce false; # opt in if remote access is required
