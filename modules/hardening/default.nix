@@ -42,15 +42,18 @@ in
       filesystems.enable = false;
 
       extras = {
-        misc = {
-          usbguard = {
-            enable = true;
-            gnome-integration = config.style.desktopEnvironment == "gnome";
-          };
-          ssh-hardening = true;
-        };
+        misc.ssh-hardening = true;
         system.secure-chrony = true;
       };
+    };
+
+    services.usbguard = {
+      enable = true;
+      dbus.enable = true;
+      IPCAllowedUsers = [
+        "root"
+        "krecony"
+      ];
     };
 
     services.jitterentropy-rngd.enable = mkForce false;
