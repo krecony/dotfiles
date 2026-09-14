@@ -17,15 +17,48 @@
     };
     impermanence = {
       enable = true;
-      resetRoot = true; # enable after verifying all persistent mounts
+      resetRoot = true;
     };
     nvidia = {
-      enable = true; # enable after setting both measured PCI bus IDs
+      enable = true;
       intelBusId = "PCI:0@0:2:0";
       nvidiaBusId = "PCI:1@0:0:0";
     };
+    nix.unfreePackages = [
+			"obsidian"
+			"spotify"
+		];
   };
-  # Let kernel PCI probing choose i915/xe; do not inherit a forced i915 initrd load.
+
+  preferences = {
+    editor = inputs.nvim.packages.${system}.default;
+    pdf = pkgs.papers;
+    video = pkgs.showtime;
+    image = pkgs.loupe;
+    browser = pkgs.mullvad-browser;
+    secondaryBrowser = pkgs.firefox;
+  };
+
+  apps = {
+    vscode.enable = true;
+    nix-locate.enable = true;
+  };
+
+  style = {
+    desktopEnvironment = "gnome";
+    displayServer = "wayland";
+    theme = "everforest";
+  };
+
+  settings.userPackages = with pkgs; [
+		proton-pass
+		protonmail-desktop
+
+		libreoffice-qt
+		obsidian
+		spotify
+	];
+
   hardware.intelgpu.loadInInitrd = false;
   hardware.intelgpu.vaapiDriver = "intel-media-driver";
   hardware.enableRedistributableFirmware = true;
@@ -33,22 +66,13 @@
   hardware.graphics.enable = true;
   hardware.firmware = [ pkgs.sof-firmware ];
 
-  style = {
-    desktopEnvironment = "gnome";
-    displayServer = "wayland";
-    theme = "everforest";
-  };
-  preferences.browser = pkgs.firefox;
-  # The reviewed Home Manager pin is from the 25.05 era. Revisit only for a fresh aligned install.
-  hm.home.stateVersion = "25.05";
-
-  # Provision before nixos-install; this survives reset and works with mutableUsers=false.
   users.users.${config.core.user} = {
     initialHashedPassword = lib.mkForce "$y$j9T$Mecu6dd12rJtcZO7K3Dnb1$A2bSTBvYuwjLw4guSKVXIlhwoBvuvGZmxV6mygZ5rT.";
   };
-  hardening.sops.enable = false; # provision the age identity before enabling SOPS/VPN
-  services.openssh.enable = lib.mkForce false; # opt in if remote access is required
-  # services.fwupd.enable = true;
+  hardening.sops.enable = false;
+	services.openssh.enable = lib.mkForce false;
+
+	# services.fwupd.enable = true;
   # services.power-profiles-daemon.enable = true;
   # services.tlp.enable = lib.mkForce false;
 
@@ -67,6 +91,7 @@
 		memoryPercent = 50;
 		priority = 100;
 	};
+
   environment.systemPackages = with pkgs; [
     sbctl
     cryptsetup
@@ -78,7 +103,4 @@
     alsa-utils
     mokutil
   ];
-
-  preferences.editor = inputs.nvim.packages.${system}.default;
-	apps.nix-locate.enable = true;
 }

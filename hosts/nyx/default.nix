@@ -6,7 +6,9 @@
     ./disko.nix
     ./settings.nix
   ];
+
   system.stateVersion = "26.05";
+  hm.home.stateVersion = "25.05";
 
   boot.initrd.availableKernelModules = [ "xhci_pci" "thunderbolt" "nvme" "usb_storage" "sd_mod" ];
   boot.initrd.kernelModules = [ ];
