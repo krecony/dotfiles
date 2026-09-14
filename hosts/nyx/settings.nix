@@ -25,9 +25,9 @@
       nvidiaBusId = "PCI:1@0:0:0";
     };
     nix.unfreePackages = [
-			"obsidian"
-			"spotify"
-		];
+      "obsidian"
+      "spotify"
+    ];
   };
 
   preferences = {
@@ -51,13 +51,13 @@
   };
 
   settings.userPackages = with pkgs; [
-		proton-pass
-		protonmail-desktop
+    proton-pass
+    protonmail-desktop
 
-		libreoffice-qt
-		obsidian
-		spotify
-	];
+    libreoffice-qt
+    obsidian
+    spotify
+  ];
 
   hardware.intelgpu.loadInInitrd = false;
   hardware.intelgpu.vaapiDriver = "intel-media-driver";
@@ -70,9 +70,9 @@
     initialHashedPassword = lib.mkForce "$y$j9T$Mecu6dd12rJtcZO7K3Dnb1$A2bSTBvYuwjLw4guSKVXIlhwoBvuvGZmxV6mygZ5rT.";
   };
   hardening.sops.enable = false;
-	services.openssh.enable = lib.mkForce false;
+  services.openssh.enable = lib.mkForce false;
 
-	# services.fwupd.enable = true;
+  # services.fwupd.enable = true;
   # services.power-profiles-daemon.enable = true;
   # services.tlp.enable = lib.mkForce false;
 
@@ -87,10 +87,10 @@
   };
 
   zramSwap = {
-		enable = true;
-		memoryPercent = 50;
-		priority = 100;
-	};
+    enable = true;
+    memoryPercent = 50;
+    priority = 100;
+  };
 
   environment.systemPackages = with pkgs; [
     sbctl

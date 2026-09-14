@@ -41,24 +41,24 @@ in
     }
     {
       boot = {
-				initrd.systemd.enable = mkDefault true;
-				loader = {
-					systemd-boot = {
-						enable = mkDefault (cfg.bootloader == "systemd-boot");
-						consoleMode = mkDefault "auto";
-					};
-					grub = {
-						enable = mkDefault (cfg.bootloader == "grub");
-						device = mkDefault "nodev";
-						efiSupport = mkDefault true;
-						enableCryptodisk = mkDefault false;
-					};
-					efi = {
-						canTouchEfiVariables = mkDefault true;
-						efiSysMountPoint = mkDefault "/boot";
-					};
-				};
-			};
+        initrd.systemd.enable = mkDefault true;
+        loader = {
+          systemd-boot = {
+            enable = mkDefault (cfg.bootloader == "systemd-boot");
+            consoleMode = mkDefault "auto";
+          };
+          grub = {
+            enable = mkDefault (cfg.bootloader == "grub");
+            device = mkDefault "nodev";
+            efiSupport = mkDefault true;
+            enableCryptodisk = mkDefault false;
+          };
+          efi = {
+            canTouchEfiVariables = mkDefault true;
+            efiSysMountPoint = mkDefault "/boot";
+          };
+        };
+      };
     }
     (mkIf cfg.quietBoot {
       boot = {
@@ -72,7 +72,7 @@ in
           "rd.udev.log_level=3"
           "splash"
         ];
-        consoleLogLevel = mkDefault 3;
+        consoleLogLevel = 3;
         initrd.verbose = mkDefault false;
       };
     })
@@ -83,53 +83,58 @@ in
         inherit (cfg) pkiBundle;
         configurationLimit = mkDefault 8;
 
-				measuredBoot = {
-					enable = true;
-					pcrs = [ 4 7 ];
-					autoCryptenroll.enable = false;
-				};
+        measuredBoot = {
+          enable = true;
+          pcrs = [
+            4
+            7
+          ];
+          autoCryptenroll.enable = false;
+        };
       };
       environment.systemPackages = [ pkgs.sbctl ];
     })
     (mkIf cfg.encryptedBootPartition {
-      boot = let 
-				grubModules = [
-					"part_gpt"
-					"part_msdos"
-					"fat"
-					"btrfs"
-					"cryptodisk"
-					"luks"
-					"pbkdf2"
-					"gcry_sha256"
-					"gcry_sha512"
-					"normal"
-					"configfile"
-					"linux"
-					"efi_gop"
-					"efi_uga"
-					"gfxterm"
-					"gfxterm_background"
-					"gettext"
-				];
-				moduleString = concatStringsSep " " grubModules;
-			in {
-        loader = {
-          grub = {
-            enable = mkForce true;
-            device = mkForce "nodev";
-            efiSupport = mkForce true;
-            enableCryptodisk = mkForce true;
-            extraGrubInstallArgs = mkForce [ "--modules=${moduleString}" ];
+      boot =
+        let
+          grubModules = [
+            "part_gpt"
+            "part_msdos"
+            "fat"
+            "btrfs"
+            "cryptodisk"
+            "luks"
+            "pbkdf2"
+            "gcry_sha256"
+            "gcry_sha512"
+            "normal"
+            "configfile"
+            "linux"
+            "efi_gop"
+            "efi_uga"
+            "gfxterm"
+            "gfxterm_background"
+            "gettext"
+          ];
+          moduleString = concatStringsSep " " grubModules;
+        in
+        {
+          loader = {
+            grub = {
+              enable = mkForce true;
+              device = mkForce "nodev";
+              efiSupport = mkForce true;
+              enableCryptodisk = mkForce true;
+              extraGrubInstallArgs = mkForce [ "--modules=${moduleString}" ];
+            };
+            systemd-boot.enable = mkForce false;
+            efi.efiSysMountPoint = mkForce "/efi";
           };
-          systemd-boot.enable = mkForce false;
-          efi.efiSysMountPoint = mkForce "/efi";
+          initrd.systemd = {
+            enable = mkForce true;
+            tpm2.enable = mkForce true;
+          };
         };
-        initrd.systemd = {
-          enable = mkForce true;
-          tpm2.enable = mkForce true;
-        };
-      };
     })
     (mkIf ((!config.services.displayManager.gdm.enable) && (config.style.displayServer != "headless")) {
       environment.systemPackages = [ pkgs.tuigreet ];

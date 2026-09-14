@@ -38,7 +38,10 @@ in
             ];
             settings = {
               allowDiscards = false; # opt in to TRIM through LUKS if desired
-              crypttabExtraOpts = lib.optionals config.boot.initrd.systemd.tpm2.enable [ "tpm2-device=auto" "tpm2-measure-pcr=yes" ];
+              crypttabExtraOpts = lib.optionals config.boot.initrd.systemd.tpm2.enable [
+                "tpm2-device=auto"
+                "tpm2-measure-pcr=yes"
+              ];
             };
             content = {
               type = "btrfs";
@@ -67,14 +70,14 @@ in
                   mountpoint = "/persist";
                   mountOptions = opts;
                 };
-								"@swap" = {
-									mountpoint = "/swap";
-									mountOptions = [ "noatime" ];
-									swap.swapfile = {
-										size = "16G";
-										priority = 10;
-									};
-								};
+                "@swap" = {
+                  mountpoint = "/swap";
+                  mountOptions = [ "noatime" ];
+                  swap.swapfile = {
+                    size = "16G";
+                    priority = 10;
+                  };
+                };
               };
               # Run after Disko creates the empty subvolumes, before installation.
               # Also create this when reset is disabled, so it can be enabled later.
