@@ -1,29 +1,11 @@
 { config, lib, ... }:
 let
-  disk = config.disko.devices.disk.system;
   opts = [
     "compress=zstd:1"
     "noatime"
   ];
 in
 {
-  assertions = [
-    {
-      assertion =
-        lib.hasPrefix "/dev/disk/by-id/" disk.device
-        && !(lib.hasInfix "REPLACE" disk.device)
-        && builtins.match ".*-part[0-9]+" disk.device == null;
-      message = "Set disko.devices.disk.system.device to the verified whole NVMe disk by-id path.";
-    }
-    {
-      assertion = !config.core.boot.diskEncryption;
-      message = "The plaintext ESP layout cannot use legacy encrypted /boot support.";
-    }
-  ];
-  boot.initrd.systemd.enable = true;
-  boot.loader.efi = {
-  };
-
   disko.devices.disk.system = {
     type = "disk";
     device = "/dev/disk/by-id/nvme-SKHynix_HFS001TFM9X179N_BSEBN75471030CB59";
@@ -85,14 +67,14 @@ in
                   mountpoint = "/persist";
                   mountOptions = opts;
                 };
-		"@swap" = {
-		  mountpoint = "/swap";
-		  mountOptions = [ "noatime" ];
-		  swap.swapfile = {
-		    size = "16G";
-		    priority = 10;
-		  };
-		};
+								"@swap" = {
+									mountpoint = "/swap";
+									mountOptions = [ "noatime" ];
+									swap.swapfile = {
+										size = "16G";
+										priority = 10;
+									};
+								};
               };
               # Run after Disko creates the empty subvolumes, before installation.
               # Also create this when reset is disabled, so it can be enabled later.
