@@ -10,7 +10,6 @@
   core = {
     user = "krecony";
     flakePath = "/home/krecony/dotfiles";
-    # Avoid the existing Huawei-oriented forced i915 module and power workarounds.
     intel.enable = false;
     boot = {
       bootloader = "systemd-boot"; # change to lanzaboote after creating keys
@@ -18,7 +17,7 @@
     };
     impermanence = {
       enable = true;
-      resetRoot = false; # enable after verifying all persistent mounts
+      resetRoot = true; # enable after verifying all persistent mounts
     };
     nvidia = {
       enable = true; # enable after setting both measured PCI bus IDs
@@ -63,7 +62,11 @@
     AllowSuspendThenHibernate = false;
   };
 
-  zramSwap.enable = true;
+  zramSwap = {
+		enable = true;
+		memoryPercent = 50;
+		priority = 100;
+	};
   environment.systemPackages = with pkgs; [
     sbctl
     cryptsetup
@@ -77,4 +80,5 @@
   ];
 
   preferences.editor = inputs.nvim.packages.${system}.default;
+	apps.nix-locate.enable = true;
 }
