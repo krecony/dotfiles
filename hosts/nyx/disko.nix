@@ -21,7 +21,6 @@ in
     }
   ];
   boot.initrd.systemd.enable = true;
-  boot.initrd.systemd.tpm2.enable = false; # enable after the first successful Secure Boot
   boot.loader.efi = {
     efiSysMountPoint = "/boot";
     canTouchEfiVariables = lib.mkDefault true;
@@ -59,7 +58,7 @@ in
             ];
             settings = {
               allowDiscards = false; # opt in to TRIM through LUKS if desired
-              crypttabExtraOpts = lib.optionals config.boot.initrd.systemd.tpm2.enable [ "tpm2-device=auto" ];
+              crypttabExtraOpts = lib.optionals config.boot.initrd.systemd.tpm2.enable [ "tpm2-device=auto" "tpm2-measure-pcr=yes" ];
             };
             content = {
               type = "btrfs";

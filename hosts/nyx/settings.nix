@@ -12,7 +12,7 @@
     flakePath = "/home/krecony/dotfiles";
     intel.enable = false;
     boot = {
-      bootloader = "systemd-boot"; # change to lanzaboote after creating keys
+      bootloader = "lanzaboote";
       quietBoot = false;
     };
     impermanence = {

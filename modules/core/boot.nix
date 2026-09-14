@@ -78,6 +78,12 @@ in
         enable = true;
         inherit (cfg) pkiBundle;
         configurationLimit = mkDefault 8;
+
+				measuredBoot = {
+					enable = true;
+					pcrs = [ 4 7 ];
+					autoCryptenroll.enable = false;
+				};
       };
       environment.systemPackages = [ pkgs.sbctl ];
     })
