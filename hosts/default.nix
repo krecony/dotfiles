@@ -66,7 +66,8 @@ let
     };
 in
 {
-  p14s = mkHost "p14s" "x86_64-linux";
+  # thinkpad p14s
+  nyx = mkHost "nyx" "x86_64-linux";
   # huawei laptop
   zephyr = mkHost "zephyr" "x86_64-linux";
   # raspberry pi 3b+
