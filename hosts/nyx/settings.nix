@@ -72,9 +72,9 @@
   hardening.sops.enable = false;
   services.openssh.enable = lib.mkForce false;
 
-  # services.fwupd.enable = true;
-  # services.power-profiles-daemon.enable = true;
-  # services.tlp.enable = lib.mkForce false;
+  services.fwupd.enable = true;
+  services.power-profiles-daemon.enable = true;
+  services.tlp.enable = lib.mkForce false;
 
   services.logind.settings.Login = {
     HandleLidSwitch = "suspend";
@@ -92,7 +92,16 @@
     priority = 100;
   };
 
+  networking.firewall.checkReversePath = false;
+  services.fprintd.enable = true;
+
+  # fingerprint reader
+  services.usbguard.rules = ''allow id 06cb:00f9 serial "a70dece416c2"'';
+  # reduce time available to auth sudo with fingerprint
+  security.pam.services.sudo.rules.auth.fprintd.settings.timeout = 10;
+
   environment.systemPackages = with pkgs; [
+    proton-vpn
     sbctl
     cryptsetup
     btrfs-progs
