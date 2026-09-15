@@ -13,7 +13,7 @@
     intel.enable = false;
     boot = {
       bootloader = "lanzaboote";
-      quietBoot = false;
+      quietBoot = true;
     };
     impermanence = {
       enable = true;
@@ -29,6 +29,17 @@
       "spotify"
     ];
   };
+
+  nixpkgs.overlays = [ inputs.mac-style-plymouth.overlays.default ];
+
+  boot = {
+    plymouth = {
+      enable = true;
+      theme = "mac-style";
+      themePackages = [ pkgs.mac-style-plymouth ];
+    };
+  };
+  stylix.targets.plymouth.enable = false;
 
   preferences = {
     editor = inputs.nvim.packages.${system}.default;
@@ -112,4 +123,5 @@
     alsa-utils
     mokutil
   ];
+
 }

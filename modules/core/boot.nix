@@ -45,7 +45,9 @@ in
         loader = {
           systemd-boot = {
             enable = mkDefault (cfg.bootloader == "systemd-boot");
-            consoleMode = mkDefault "auto";
+            consoleMode = mkDefault "max";
+            editor = mkDefault false;
+            configurationLimit = mkDefault null;
           };
           grub = {
             enable = mkDefault (cfg.bootloader == "grub");
@@ -62,6 +64,7 @@ in
     }
     (mkIf cfg.quietBoot {
       boot = {
+        loader.timeout = 0;
         kernelParams = [
           "logo.nologo"
           "fbcon=nodefer"
@@ -81,7 +84,9 @@ in
       boot.lanzaboote = {
         enable = true;
         inherit (cfg) pkiBundle;
-        configurationLimit = mkDefault 8;
+
+        # measured boot limitation
+        configurationLimit = mkForce 8;
 
         measuredBoot = {
           enable = true;
