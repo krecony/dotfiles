@@ -11,14 +11,12 @@ let
 in
 {
   imports = mkImports [
+    inputs.stylix.nixosModules.stylix
     ./style.nix
     ./fonts.nix
-
     ./hypr
     ./gnome
     ./extra
-
-    inputs.stylix.nixosModules.stylix
   ];
 
   options.style = {
