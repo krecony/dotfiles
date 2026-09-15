@@ -54,12 +54,13 @@ in
         "root"
         "krecony"
       ];
+      IPCAllowedGroups = [ "wheel" ];
     };
 
     services.jitterentropy-rngd.enable = mkForce false;
 
-    security = mkIf cfg.disableSUIDs {
-      wrappers = mkMerge [
+    security = {
+      wrappers = mkIf cfg.disableSUIDs (mkMerge [
         {
           sudoedit.setuid = lib.mkForce false;
           sg.setuid = lib.mkForce false;
@@ -79,7 +80,7 @@ in
           newgidmap.setuid = lib.mkForce false;
           newuidmap.setuid = lib.mkForce false;
         })
-      ];
+      ]);
     };
   };
 }
