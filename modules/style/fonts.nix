@@ -3,30 +3,6 @@
   lib,
   ...
 }:
-let
-  saira-semi-condensed = pkgs.stdenv.mkDerivation {
-    pname = "saira-semi-condensed";
-    version = "1.0";
-
-    src = pkgs.fetchzip {
-      url = "https://www.omnibus-type.com/wp-content/uploads/Saira-Semi-Condensed.zip";
-      hash = "sha256-5FH9O5rINVC8/aA4xC/SsefPBwGfqzmu/+K7A89G+JU=";
-    };
-
-    installPhase = ''
-      runHook preInstall
-
-      install -m444 -Dt $out/share/fonts/truetype ttf/*.ttf
-
-      runHook postInstall
-    '';
-
-    meta = {
-      homepage = "https://www.omnibus-type.com/fonts/saira-semi-condensed/";
-      license = pkgs.lib.licenses.ofl;
-    };
-  };
-in
 {
   stylix.fonts = with pkgs; {
     serif = {
@@ -35,8 +11,8 @@ in
     };
 
     sansSerif = {
-      name = "SairaSemiCondensed";
-      package = saira-semi-condensed;
+      name = "Inter";
+      package = inter;
     };
 
     monospace = {
