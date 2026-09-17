@@ -106,8 +106,11 @@
   networking.firewall.checkReversePath = false;
   services.fprintd.enable = true;
 
-  # fingerprint reader
-  services.usbguard.rules = ''allow id 06cb:00f9 serial "a70dece416c2"'';
+  services.usbguard.rules = lib.concatStringsSep "\n" [
+		''allow id 06cb:00f9 serial "a70dece416c2"'' # fingerprint reader
+		''allow id 30c9:00f4 serial "01.00.00"'' # camera
+		''allow id 2ce3:9563 serial ""'' # smartcard reader
+	];
   # reduce time available to auth sudo with fingerprint
   security.pam.services.sudo.rules.auth.fprintd.settings.timeout = 10;
 
