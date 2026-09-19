@@ -11,10 +11,7 @@
     user = "krecony";
     flakePath = "/home/krecony/dotfiles";
     intel.enable = false;
-    boot = {
-      bootloader = "lanzaboote";
-      quietBoot = true;
-    };
+    boot.bootloader = "lanzaboote";
     impermanence = {
       enable = true;
       resetRoot = true;
@@ -27,19 +24,9 @@
     nix.unfreePackages = [
       "obsidian"
       "spotify"
+			"espresso"
     ];
   };
-
-  nixpkgs.overlays = [ inputs.mac-style-plymouth.overlays.default ];
-
-  boot = {
-    plymouth = {
-      enable = true;
-      theme = "mac-style";
-      themePackages = [ pkgs.mac-style-plymouth ];
-    };
-  };
-  stylix.targets.plymouth.enable = false;
 
   preferences = {
     editor = inputs.nvim.packages.${system}.default;
@@ -53,6 +40,7 @@
   apps = {
     vscode.enable = true;
     nix-locate.enable = true;
+		podman.enable = true;
   };
 
   style = {
@@ -68,6 +56,8 @@
     libreoffice-qt
     obsidian
     spotify
+
+		espresso
   ];
 
   hardware.intelgpu.loadInInitrd = false;
