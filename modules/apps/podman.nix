@@ -29,7 +29,7 @@ in
     };
 
     environment.systemPackages = with pkgs; [
-			distrobox
+      distrobox
       podman-tui
       podman-compose
     ];

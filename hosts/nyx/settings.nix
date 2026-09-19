@@ -24,14 +24,14 @@
     nix.unfreePackages = [
       "obsidian"
       "spotify"
-			"espresso"
+      "espresso"
     ];
   };
 
-	gaming.minecraft = {
-		enable = true;
-		mcsr = true;
-	};
+  gaming.minecraft = {
+    enable = true;
+    mcsr = true;
+  };
 
   preferences = {
     editor = inputs.nvim.packages.${system}.default;
@@ -45,7 +45,7 @@
   apps = {
     vscode.enable = true;
     nix-locate.enable = true;
-		podman.enable = true;
+    podman.enable = true;
   };
 
   style = {
@@ -62,7 +62,7 @@
     obsidian
     spotify
 
-		espresso
+    espresso
   ];
 
   hardware.intelgpu.loadInInitrd = false;
@@ -102,10 +102,10 @@
   services.fprintd.enable = true;
 
   services.usbguard.rules = lib.concatStringsSep "\n" [
-		''allow id 06cb:00f9 serial "a70dece416c2"'' # fingerprint reader
-		''allow id 30c9:00f4 serial "01.00.00"'' # camera
-		''allow id 2ce3:9563 serial ""'' # smartcard reader
-	];
+    ''allow id 06cb:00f9 serial "a70dece416c2"'' # fingerprint reader
+    ''allow id 30c9:00f4 serial "01.00.00"'' # camera
+    ''allow id 2ce3:9563 serial ""'' # smartcard reader
+  ];
   # reduce time available to auth sudo with fingerprint
   security.pam.services.sudo.rules.auth.fprintd.settings.timeout = 10;
 
