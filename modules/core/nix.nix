@@ -56,10 +56,7 @@ in
           "flakes"
         ];
 
-        trusted-users = [
-          "@wheel"
-          "${user}"
-        ];
+        trusted-users = [ "root" ];
 
         substituters = [
           "https://cache.nixos.org"
