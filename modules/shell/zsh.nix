@@ -51,7 +51,7 @@ in
         source ${pkgs.zsh-defer}/share/zsh-defer/zsh-defer.plugin.zsh
         autoload -Uz compinit && compinit || true
 
-        eval "$(fzf --zsh)"
+        eval "$(${lib.getExe pkgs.fzf} --zsh)"
         eval "$(${getExe pkgs.direnv} hook zsh)"
 
 
@@ -101,7 +101,7 @@ in
       + (
         if config.hm.programs.starship.enable then
           ''
-            eval "$(starship init zsh)"
+            eval "$(${lib.getExe config.hm.programs.starship.package} init zsh)"
           ''
         else
           ""

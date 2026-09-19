@@ -4,7 +4,7 @@
     enable = true;
 
     settings = {
-      format = "$username$hostname$directory$git_branch$git_commit$git_state$git_status$nix_shell$jobs$line_break$python$character";
+      format = ''$username$hostname$directory$git_branch$git_commit$git_state$git_status$nix_shell$jobs$line_break$python''${env_var.CONTAINER_ID}$character'';
       right_format = "$cmd_duration";
 
       # makes right_format be on the first line of prompt
@@ -53,6 +53,12 @@
         format = "[$virtualenv]($style) ";
         style = "fg:bright-black";
       };
+			env_var.CONTAINER_ID = {
+				variable = "CONTAINER_ID";
+				description = "Displays name of the activated distrobox container";
+				format = "[$env_value ]($style)";
+				style = "bold green";
+			};
     };
   };
 }
