@@ -49,12 +49,13 @@ in
 
     services.usbguard = {
       enable = true;
+			implicitPolicyTarget = "block"; # block devices that don't match policy
+			presentDevicePolicy = "apply-policy"; # apply policy to devices present before start of daemon
+			insertedDevicePolicy = "apply-policy"; # apply policy to devices conncted after start of daemon
+			presentControllerPolicy = "keep"; # keep usb controllers present before start of daemon
       dbus.enable = true;
-      IPCAllowedUsers = [
-        "root"
-        "krecony"
-      ];
-      IPCAllowedGroups = [ "wheel" ];
+      IPCAllowedUsers = [ "root" ];
+      IPCAllowedGroups = [ ];
     };
 
     services.jitterentropy-rngd.enable = mkForce false;
