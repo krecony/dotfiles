@@ -62,10 +62,6 @@
       url = "github:KreconyMakaron/ags";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    polymc = {
-      url = "github:PolyMC/PolyMC";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
     lanzaboote = {
       url = "github:nix-community/lanzaboote/v1.1.0";
       inputs.nixpkgs.follows = "nixpkgs";

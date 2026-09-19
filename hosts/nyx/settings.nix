@@ -28,6 +28,11 @@
     ];
   };
 
+	gaming.minecraft = {
+		enable = true;
+		mcsr = true;
+	};
+
   preferences = {
     editor = inputs.nvim.packages.${system}.default;
     pdf = pkgs.papers;
