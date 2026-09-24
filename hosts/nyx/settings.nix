@@ -73,8 +73,9 @@
   hardware.firmware = [ pkgs.sof-firmware ];
 
   users.users.${config.core.user} = {
-    initialHashedPassword = lib.mkForce "$y$j9T$Mecu6dd12rJtcZO7K3Dnb1$A2bSTBvYuwjLw4guSKVXIlhwoBvuvGZmxV6mygZ5rT.";
-  };
+		hashedPasswordFile = "/persist/secrets/pass";
+		hashedPassword = null;
+	};
   hardening.sops.enable = false;
   services.openssh.enable = lib.mkForce false;
 
