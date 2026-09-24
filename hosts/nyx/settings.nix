@@ -73,9 +73,9 @@
   hardware.firmware = [ pkgs.sof-firmware ];
 
   users.users.${config.core.user} = {
-		hashedPasswordFile = "/persist/secrets/pass";
-		hashedPassword = null;
-	};
+    hashedPasswordFile = "/persist/secrets/pass";
+    hashedPassword = null;
+  };
   hardening.sops.enable = false;
   services.openssh.enable = lib.mkForce false;
 
@@ -102,23 +102,26 @@
   networking.firewall.checkReversePath = false;
   services.fprintd.enable = true;
 
-services.usbguard =
-  let
-    cameraInterfaces = lib.concatStringsSep " " (
-      [ "0e:01:01" "0e:01:01" ]
-      ++ lib.replicate 14 "0e:02:01"
-      ++ [ "fe:01:01" ]
-    );
-  in
-  {
-    rules = lib.concatStringsSep "\n" [
-      ''allow id 06cb:00f9 serial "a70dece416c2" hash "TUA+l1PNEXmynhlsFz1N2XEaK2eA/RyJbagjuMWuAhY=" via-port "3-3" with-interface equals { ff:00:00 }'' # fingerprint
-      ''allow id 30c9:00f4 serial "01.00.00" hash "egW6r+nj/jb6OqHltDwLrITzJyR0sSp+gSRe6jM4xwQ=" via-port "3-4" with-interface equals { ${cameraInterfaces} }'' # camera
-      ''allow id 2ce3:9563 serial "" hash "SOxag+v/yr7SA04eNCa88HFqD0IhMbIt2Vk0jDIs21A=" via-port "3-8" with-interface equals { 0b:00:00 }'' # smartcard reader
-    ];
-  };  
+  services.usbguard =
+    let
+      cameraInterfaces = lib.concatStringsSep " " (
+        [
+          "0e:01:01"
+          "0e:01:01"
+        ]
+        ++ lib.replicate 14 "0e:02:01"
+        ++ [ "fe:01:01" ]
+      );
+    in
+    {
+      rules = lib.concatStringsSep "\n" [
+        ''allow id 06cb:00f9 serial "a70dece416c2" hash "TUA+l1PNEXmynhlsFz1N2XEaK2eA/RyJbagjuMWuAhY=" via-port "3-3" with-interface equals { ff:00:00 }'' # fingerprint
+        ''allow id 30c9:00f4 serial "01.00.00" hash "egW6r+nj/jb6OqHltDwLrITzJyR0sSp+gSRe6jM4xwQ=" via-port "3-4" with-interface equals { ${cameraInterfaces} }'' # camera
+        ''allow id 2ce3:9563 serial "" hash "SOxag+v/yr7SA04eNCa88HFqD0IhMbIt2Vk0jDIs21A=" via-port "3-8" with-interface equals { 0b:00:00 }'' # smartcard reader
+      ];
+    };
 
-	# reduce time available to auth sudo with fingerprint
+  # reduce time available to auth sudo with fingerprint
   security.pam.services.sudo.rules.auth.fprintd.settings.timeout = 10;
 
   environment.systemPackages = with pkgs; [
