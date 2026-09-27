@@ -67,15 +67,13 @@
 
   hardware.intelgpu.loadInInitrd = false;
   hardware.intelgpu.vaapiDriver = "intel-media-driver";
-  hardware.enableRedistributableFirmware = true;
-  hardware.cpu.intel.updateMicrocode = true;
-  hardware.graphics.enable = true;
   hardware.firmware = [ pkgs.sof-firmware ];
 
   users.users.${config.core.user} = {
     hashedPasswordFile = "/persist/secrets/pass";
     hashedPassword = null;
   };
+
   hardening.sops.enable = false;
   services.openssh.enable = lib.mkForce false;
 
