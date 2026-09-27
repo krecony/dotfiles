@@ -100,6 +100,8 @@
   };
 
   networking.firewall.checkReversePath = false;
+
+	# fingerprint
   services.fprintd.enable = true;
 
   services.usbguard =
