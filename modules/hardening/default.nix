@@ -33,42 +33,47 @@ in
     inputs.nix-mineral.nixosModules.nix-mineral
   ];
 
-  config = {
-    services.usbguard = {
-      enable = true;
-      implicitPolicyTarget = "block"; # block devices that don't match policy
-      presentDevicePolicy = "apply-policy"; # apply policy to devices present before start of daemon
-      insertedDevicePolicy = "apply-policy"; # apply policy to devices conncted after start of daemon
-      presentControllerPolicy = "keep"; # keep usb controllers present before start of daemon
-      dbus.enable = true;
-      IPCAllowedUsers = [ "root" ];
-      IPCAllowedGroups = [ ];
-    };
+  config = mkMerge [
+    (mkIf config.nix-mineral.enable {
+      # the kicksecure modification of the value gets concatted with the nixpkgs definition and we get two values
+      # this causes a warning in the journal, this simply fixes the warning, the assignment worked regardless
+      systemd.services.jitterentropy.serviceConfig.LimitMEMLOCK = lib.mkForce "2M";
+    })
+    {
+      services.usbguard = {
+        enable = true;
+        implicitPolicyTarget = "block"; # block devices that don't match policy
+        presentDevicePolicy = "apply-policy"; # apply policy to devices present before start of daemon
+        insertedDevicePolicy = "apply-policy"; # apply policy to devices conncted after start of daemon
+        presentControllerPolicy = "keep"; # keep usb controllers present before start of daemon
+        dbus.enable = true;
+        IPCAllowedUsers = [ "root" ];
+        IPCAllowedGroups = [ ];
+      };
 
-    services.jitterentropy-rngd.enable = mkForce false;
-
-    security = {
-      wrappers = mkIf cfg.disableSUIDs (mkMerge [
-        {
-          sudoedit.setuid = lib.mkForce false;
-          sg.setuid = lib.mkForce false;
-          mount.setuid = lib.mkForce false;
-          umount.setuid = lib.mkForce false;
-          pkexec.setuid = lib.mkForce false;
-          newgrp.setuid = lib.mkForce false;
-        }
-        (mkIf config.programs.fuse.enable {
-          # these wrappers only exist (with a source) when fuse is enabled,
-          # so only override their setuid bit then to avoid a sourceless wrapper
-          fusermount.setuid = lib.mkForce false;
-          fusermount3.setuid = lib.mkForce false;
-        })
-        (mkIf (!config.virtualisation.podman.enable) {
-          # for rootless podman
-          newgidmap.setuid = lib.mkForce false;
-          newuidmap.setuid = lib.mkForce false;
-        })
-      ]);
-    };
-  };
+      security = {
+        wrappers = mkIf cfg.disableSUIDs (mkMerge [
+          {
+            sudoedit.setuid = lib.mkForce false;
+            sg.setuid = lib.mkForce false;
+            mount.setuid = lib.mkForce false;
+            umount.setuid = lib.mkForce false;
+            pkexec.setuid = lib.mkForce false;
+            newgrp.setuid = lib.mkForce false;
+          }
+          (mkIf config.programs.fuse.enable {
+            # these wrappers only exist (with a source) when fuse is enabled,
+            # so only override their setuid bit then to avoid a sourceless wrapper
+            fusermount.setuid = lib.mkForce false;
+            fusermount3.setuid = lib.mkForce false;
+          })
+          (mkIf (!config.virtualisation.podman.enable) {
+            # for rootless podman
+            newgidmap.setuid = lib.mkForce false;
+            newuidmap.setuid = lib.mkForce false;
+          })
+        ]);
+      };
+    }
+  ];
 }
