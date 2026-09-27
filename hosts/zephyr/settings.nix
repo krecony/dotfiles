@@ -10,10 +10,7 @@
   gaming.steam.enable = true;
   gaming.lutris.enable = true;
 
-  hardening = {
-    disableSUIDs = true;
-    nix-mineral.enable = true;
-  };
+  hardening.disableSUIDs = true;
 
   powerManagement.enable = true;
 
@@ -33,6 +30,18 @@
       "idea"
       "cursor"
     ];
+  };
+
+  nix-mineral = {
+    enable = true;
+    preset = "compatibility";
+
+    filesystems.enable = false;
+
+    extras = {
+      misc.ssh-hardening = true;
+      system.secure-chrony = true;
+    };
   };
 
   preferences = {

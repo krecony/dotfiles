@@ -25,7 +25,6 @@ in
         disables sudo (use run0 instead)
       '';
     };
-    nix-mineral.enable = mkEnableOption "enable nix mineral";
   };
 
   imports = mkImports [
@@ -35,18 +34,6 @@ in
   ];
 
   config = {
-    nix-mineral = {
-      inherit (cfg.nix-mineral) enable;
-      preset = "compatibility";
-
-      filesystems.enable = false;
-
-      extras = {
-        misc.ssh-hardening = true;
-        system.secure-chrony = true;
-      };
-    };
-
     services.usbguard = {
       enable = true;
       implicitPolicyTarget = "block"; # block devices that don't match policy
