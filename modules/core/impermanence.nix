@@ -58,6 +58,22 @@ in
       };
     })
     (lib.mkIf (cfg.enable && cfg.resetRoot) {
+      # mounts /root with noexec, nodev, and nosuid
+      systemd.units."root.mount".text = lib.mkForce ''
+        [Unit]
+        Before=local-fs.target
+        DefaultDependencies=false
+
+        [Mount]
+        Options=bind,x-gvfs-hide,noexec,nodev,nosuid
+        Type=none
+        What=/persist/root
+        Where=/root
+
+        [Install]
+        WantedBy=local-fs.target
+      '';
+
       boot.initrd.systemd.services.reset-root = {
         description = "Restore blank Btrfs root before mounting sysroot";
         requiredBy = [ "sysroot.mount" ];

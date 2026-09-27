@@ -98,8 +98,47 @@ in
       };
     };
   };
-  fileSystems."/persist".neededForBoot = true;
-  fileSystems."/var".neededForBoot = true;
-  fileSystems."/home".neededForBoot = true;
-  fileSystems."/nix".neededForBoot = true;
+
+  fileSystems =
+    (lib.genAttrs
+      [
+        "/var"
+        "/persist"
+        "/swap"
+        "/home"
+      ]
+      (_: {
+        options = [
+          "nodev"
+          "nosuid"
+        ];
+      })
+    )
+    // {
+      "/boot".options = [
+        "noexec"
+        "nodev"
+        "nosuid"
+      ];
+      "/tmp" = {
+        device = "/tmp";
+        fsType = "none";
+        options = [
+          "bind"
+          "nodev"
+          "nosuid"
+        ];
+      };
+    }
+    // (lib.genAttrs
+      [
+        "/persist"
+        "/var"
+        "/home"
+        "/nix"
+      ]
+      (_: {
+        neededForBoot = true;
+      })
+    );
 }

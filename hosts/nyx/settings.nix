@@ -74,7 +74,16 @@
     hashedPassword = null;
   };
 
-  hardening.sops.enable = false;
+  hardening = {
+    sops.enable = false;
+  };
+
+  nix-mineral = {
+    enable = true;
+    preset = "compatibility";
+    filesystems.enable = false; # nix-mineral applies bind which breaks on btrfs
+  };
+
   services.openssh.enable = lib.mkForce false;
 
   services.fwupd.enable = true;
@@ -99,7 +108,7 @@
 
   networking.firewall.checkReversePath = false;
 
-	# fingerprint
+  # fingerprint
   services.fprintd.enable = true;
 
   services.usbguard =
