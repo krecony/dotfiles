@@ -82,6 +82,16 @@
     enable = true;
     preset = "compatibility";
     filesystems.enable = false; # nix-mineral applies bind which breaks on btrfs
+    kernel-modules = {
+      enable = true;
+      load = true;
+      disable = lib.genAttrs [
+        "thunderbolt-related"
+        "bluetooth-related"
+        "intelme-related"
+      ] (_: false);
+    };
+    settings.misc.nix-wheel = true; # makes nix command only accessible to wheel group
   };
 
   services.openssh.enable = lib.mkForce false;
