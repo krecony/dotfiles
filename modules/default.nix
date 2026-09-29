@@ -33,8 +33,7 @@ let
 in
 {
   imports = mkImports [
-    ./gaming.nix
-
+    ./gaming
     ./preferences
     ./apps
     ./core
