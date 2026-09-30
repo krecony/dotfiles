@@ -6,9 +6,9 @@ local Modes = require("waywork.modes")
 local Keys = require("waywork.keys")
 local Processes = require("waywork.processes")
 
-local thin_res = { w = resolution.h * 0.28, h = resolution.h }
+local thin_res = { w = math.max(340, math.floor(resolution.h * 0.28)), h = resolution.h }
 
-local wide_res = { w = resolution.w, h = resolution.h / 3.6 }
+local wide_res = { w = resolution.w, h = math.floor(resolution.h / 3.6) }
 local tall_res = { w = 384, h = 16384 }
 
 local ModeManager = Modes.ModeManager.new(waywall)
@@ -42,7 +42,7 @@ function piechart_src(res)
 end
 
 local left_middle = (resolution.w - thin_res.w) / 4
-local pie_scale = 15
+local pie_scale = math.max(1, math.floor(15 * resolution.h / 1920))
 
 function piechart_dst(res)
 	if res.w == resolution.w and res.h == resolution.h then
