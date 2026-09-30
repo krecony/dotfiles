@@ -30,8 +30,23 @@
 
   gaming.minecraft = {
     enable = true;
-    mcsr = true;
+    mcsr = {
+      enable = true;
+      width = 1920;
+      height = 1200;
+      remaps = [
+        {
+          from = "X";
+          to = "F3";
+        }
+        {
+          from = "GRAVE";
+          to = "F5";
+        }
+      ];
+    };
   };
+  gaming.steam.enable = true;
 
   preferences = {
     editor = inputs.nvim.packages.${system}.default;

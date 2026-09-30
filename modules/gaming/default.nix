@@ -11,7 +11,7 @@ in
 {
   imports = mkImports [
     ./steam.nix
-    ./minecraft.nix
+    ./minecraft
   ];
 
   options.gaming = {
