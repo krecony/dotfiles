@@ -11,7 +11,7 @@ let
     appindicator # tray icons
     blur-my-shell # adds transparency and blur to gnome
     (pkgs.callPackage ./copyous.nix { inherit pkgs; }) # clipboard
-    advanced-media-controller # adds mpris widget
+    (pkgs.callPackage ./advanced-media-controller.nix { inherit pkgs; }) # adds mpris widget
     caffeine # provides idle-inhibit on demand
     paperwm
   ];
