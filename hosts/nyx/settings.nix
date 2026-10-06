@@ -82,7 +82,6 @@
 
   hardware.intelgpu.loadInInitrd = false;
   hardware.intelgpu.vaapiDriver = "intel-media-driver";
-  hardware.firmware = [ pkgs.sof-firmware ];
 
   users.users.${config.core.user} = {
     hashedPasswordFile = "/persist/secrets/pass";
