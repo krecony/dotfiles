@@ -136,6 +136,17 @@
 
   networking.firewall.checkReversePath = false;
 
+  networking.networkmanager.dispatcherScripts = [
+    {
+      type = "pre-up";
+      source = pkgs.writeShellScript "protonvpn-mtu" ''
+        if [ "$1" = "proton0" ] && [ "$2" = "pre-up" ]; then
+          ${pkgs.iproute2}/bin/ip link set dev "$1" mtu 1280
+        fi
+      '';
+    }
+  ];
+
   # fingerprint
   services.fprintd.enable = true;
 
