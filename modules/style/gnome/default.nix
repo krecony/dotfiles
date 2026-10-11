@@ -48,6 +48,9 @@ in
       avahi.enable = false; # mDNS responder
     };
 
+    # GNOME manages bluetooth using gnome-bluetooth
+    services.blueman.enable = mkForce false;
+
     security.pam.services.login.enableGnomeKeyring = config.services.gnome.gnome-keyring.enable;
 
     settings.userPackages = with pkgs; [
