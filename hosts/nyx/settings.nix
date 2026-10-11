@@ -25,6 +25,7 @@
       "obsidian"
       "spotify"
       "espresso"
+      "lsfg-vk" # dependency of bottles
     ];
   };
 
@@ -72,6 +73,8 @@
   settings.userPackages = with pkgs; [
     proton-pass
     protonmail-desktop
+
+    bottles
 
     libreoffice-qt
     obsidian
