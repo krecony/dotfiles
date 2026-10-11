@@ -23,7 +23,6 @@
     };
     nix.unfreePackages = [
       "obsidian"
-      "spotify"
       "espresso"
       "lsfg-vk" # dependency of bottles
     ];
@@ -78,7 +77,7 @@
 
     libreoffice-qt
     obsidian
-    spotify
+    spotifast
 
     espresso
   ];
