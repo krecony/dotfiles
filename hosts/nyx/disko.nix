@@ -99,7 +99,7 @@ in
     };
   };
 
-  fileSystems =
+  fileSystems = lib.mkMerge [
     (lib.genAttrs
       [
         "/var"
@@ -114,7 +114,7 @@ in
         ];
       })
     )
-    // {
+    {
       "/boot".options = [
         "noexec"
         "nodev"
@@ -130,7 +130,7 @@ in
         ];
       };
     }
-    // (lib.genAttrs
+    (lib.genAttrs
       [
         "/persist"
         "/var"
@@ -140,5 +140,7 @@ in
       (_: {
         neededForBoot = true;
       })
-    );
+    )
+
+  ];
 }
