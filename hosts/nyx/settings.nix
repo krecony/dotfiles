@@ -80,6 +80,9 @@
     spotifast
 
     espresso
+
+    pianobooster
+    linthesia
   ];
 
   hardware.intelgpu.loadInInitrd = false;
@@ -167,8 +170,9 @@
         ''allow id 06cb:00f9 serial "a70dece416c2" hash "TUA+l1PNEXmynhlsFz1N2XEaK2eA/RyJbagjuMWuAhY=" via-port "3-3" with-interface equals { ff:00:00 }'' # fingerprint
         ''allow id 30c9:00f4 serial "01.00.00" hash "egW6r+nj/jb6OqHltDwLrITzJyR0sSp+gSRe6jM4xwQ=" via-port "3-4" with-interface equals { ${cameraInterfaces} }'' # camera
         ''allow id 2ce3:9563 serial "" hash "SOxag+v/yr7SA04eNCa88HFqD0IhMbIt2Vk0jDIs21A=" via-port "3-8" with-interface equals { 0b:00:00 }'' # smartcard reader
-        ''allow id 046d:c539 serial "" hash "zPVf0/h8u0iaLZgla3hm9BjINDTSEEIMF/GWCyOYCwo="'' # usb mouse
         ''allow id 8087:0037 serial "" hash "V9/DvXOXdoNjfj5rjWLB2rBC/dpzvHUEpU0vnGMd9tw=" via-port "3-10" with-interface equals { ${bluetoothInterfaces} }'' # bluetooth
+        ''allow id 046d:c539 serial "" hash "zPVf0/h8u0iaLZgla3hm9BjINDTSEEIMF/GWCyOYCwo="'' # usb mouse
+        ''allow id 0a4d:0090 serial "" hash "aTP/Nuu5NG3FI0jzmIroFrqA61jBi+dxQym+Eoe005I="'' # midi keyboard
       ];
     };
 
