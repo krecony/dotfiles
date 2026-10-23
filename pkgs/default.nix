@@ -5,4 +5,7 @@ final: prev: {
       inherit (prev.gnomeExtensions) advanced-media-controller;
     };
   };
+  pianobooster = final.callPackage ./pianobooster.nix {
+    inherit (prev) pianobooster;
+  };
 }
