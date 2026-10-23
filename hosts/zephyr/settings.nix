@@ -38,10 +38,7 @@
 
     filesystems.enable = false;
 
-    extras = {
-      misc.ssh-hardening = true;
-      system.secure-chrony = true;
-    };
+    extras.misc.ssh-hardening = true;
   };
 
   preferences = {
