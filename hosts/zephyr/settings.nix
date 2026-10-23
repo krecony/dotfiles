@@ -27,7 +27,7 @@
       "obsidian"
       "spotify"
       "pycharm"
-      "idea"
+      "intellij-idea"
       "cursor"
     ];
   };
@@ -115,8 +115,8 @@
       # FIXME: wait for vesktop's electron version to be bumped
       # vesktop # discord client
 
-      jetbrains.pycharm
-      jetbrains.idea
+      pycharm
+      intellij-idea
 
       github-copilot-cli
 
