@@ -111,7 +111,7 @@
       ] (_: false);
     };
     settings.misc.nix-wheel = true; # makes nix command only accessible to wheel group
-    settings.etc.kicksecure-bluetooth = true;
+    settings.etc.harden-bluetooth = true;
   };
 
   services.openssh.enable = lib.mkForce false;
