@@ -10,6 +10,8 @@
       lib = import ./lib { inherit inputs; };
     in
     {
+      overlays.default = import ./pkgs;
+
       formatter = lib.custom.forAllSystems (system: nixpkgs.legacyPackages.${system}.nixfmt-tree);
 
       checks = lib.custom.forAllSystems (

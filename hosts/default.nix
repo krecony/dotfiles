@@ -45,6 +45,7 @@ let
         {
           networking.hostName = name;
           nixpkgs.hostPlatform = system;
+          nixpkgs.overlays = [ self.overlays.default ];
         }
 
         ./${name}

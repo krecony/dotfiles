@@ -1,7 +1,12 @@
 {
-  pkgs ? import <nixpkgs> { },
+  lib,
+  stdenv,
+  fetchurl,
+  fetchzip,
+  glib,
+  libgda5,
+  gsound,
 }:
-with pkgs;
 let
   highlightJs = fetchurl {
     url = "https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.1/es/highlight.min.js";

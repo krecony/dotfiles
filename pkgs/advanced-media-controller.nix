@@ -1,7 +1,7 @@
 {
-  pkgs ? import <nixpkgs> { },
+  advanced-media-controller,
 }:
-pkgs.gnomeExtensions.advanced-media-controller.overrideAttrs (oldAttrs: {
+advanced-media-controller.overrideAttrs (oldAttrs: {
   postInstall = (oldAttrs.postInstall or "") + ''
     # Spotify supplies mpris:length as uint64; get_int64() emits a GLib
     # critical for that type, which the extension's try/catch cannot catch.

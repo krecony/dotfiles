@@ -10,8 +10,8 @@ let
   extensions = with pkgs.gnomeExtensions; [
     appindicator # tray icons
     blur-my-shell # adds transparency and blur to gnome
-    (pkgs.callPackage ./copyous.nix { inherit pkgs; }) # clipboard
-    (pkgs.callPackage ./advanced-media-controller.nix { inherit pkgs; }) # adds mpris widget
+    copyous # clipboard
+    advanced-media-controller # adds mpris widget
     caffeine # provides idle-inhibit on demand
     paperwm
   ];
