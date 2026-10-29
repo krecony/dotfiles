@@ -4,6 +4,7 @@
   pkgs,
   inputs,
   system,
+  utils,
   ...
 }:
 let
@@ -16,6 +17,7 @@ let
         pkgs
         inputs
         system
+        utils
         mkImports
         ;
       inherit (config.core) user;
