@@ -1,4 +1,4 @@
-lib: {
+lib: rec {
   mkBoolOption =
     desc: bool:
     lib.mkOption {
@@ -7,6 +7,8 @@ lib: {
       description = desc;
       type = lib.types.bool;
     };
+
+  mkEnableByDefaultOption = desc: mkBoolOption desc true;
 
   forAllSystems = lib.genAttrs [
     "aarch64-darwin"
