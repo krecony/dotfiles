@@ -26,6 +26,7 @@
       "espresso"
       "lsfg-vk" # dependency of bottles
     ];
+    audio.enableAudioProduction = true;
   };
 
   gaming.minecraft = {

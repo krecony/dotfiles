@@ -19,6 +19,10 @@ in
       description = "Enables audio on the device";
     };
     enableAudioProduction = mkEnableOption "Enables audio production features";
+    soundcardPciId = mkOption {
+      type = types.str;
+      default = "00:1f.3";
+    };
   };
 
   imports = [
@@ -63,7 +67,7 @@ in
 
     musnix = {
       enable = cfg.enableAudioProduction;
-      soundcardPciId = "00:1f.3";
+      inherit (cfg) soundcardPciId;
     };
 
     environment.variables.PIPEWIRE_RUNTIME_DIR = "/run/user/1000";
