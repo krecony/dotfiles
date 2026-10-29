@@ -85,8 +85,9 @@ in
         enable = true;
         inherit (cfg) pkiBundle;
 
-        # measured boot limitation
-        configurationLimit = mkForce 8;
+        # measured boot limitation of systemd
+        # FIXME: to be fixed upstream of lanzaboote in https://github.com/systemd/systemd/pull/43982
+        configurationLimit = mkForce 4;
 
         measuredBoot = {
           enable = true;
