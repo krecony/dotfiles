@@ -4,7 +4,6 @@
   fetchurl,
   fetchzip,
   glib,
-  libgda5,
   gsound,
 }:
 let
@@ -25,7 +24,6 @@ stdenv.mkDerivation (finalAttrs: {
 
   nativeBuildInputs = [
     glib
-    libgda5
     gsound
   ];
 
@@ -36,11 +34,7 @@ stdenv.mkDerivation (finalAttrs: {
   '';
 
   preInstall = ''
-    sed -i "1i import GIRepository from 'gi://GIRepository';\nGIRepository.Repository.dup_default().prepend_search_path('${libgda5}/lib/girepository-1.0');\nGIRepository.Repository.dup_default().prepend_search_path('${gsound}/lib/girepository-1.0');\n" lib/preferences/dependencies/dependencies.js
-
-    sed -i "1i import GIRepository from 'gi://GIRepository';\nGIRepository.Repository.dup_default().prepend_search_path('${libgda5}/lib/girepository-1.0');\n" lib/database/entryTracker.js
     sed -i "1i import GIRepository from 'gi://GIRepository';\nGIRepository.Repository.dup_default().prepend_search_path('${gsound}/lib/girepository-1.0');\n" lib/common/sound.js
-
     sed -i "1i import GIRepository from 'gi://GIRepository';\nGIRepository.Repository.dup_default().prepend_search_path('${gsound}/lib/girepository-1.0');\n" lib/preferences/general/feedbackSettings.js
   '';
 

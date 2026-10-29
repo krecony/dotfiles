@@ -57,6 +57,7 @@
     clipboard-margin-top = 0;
     clipboard-position-vertical = "bottom";
     disable-hljs-dialog = true;
+    database-backend = "json";
   };
   "org/gnome/shell/extensions/copyous/character-item".show-unicode = true;
   "org/gnome/shell/extensions/copyous/text-item" = {
