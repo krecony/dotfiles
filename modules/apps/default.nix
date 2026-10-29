@@ -18,6 +18,7 @@ in
     ./lmms.nix
     ./podman.nix
     ./nix-locate.nix
+    ./codex.nix
   ];
 
   options.settings.userPackages = mkOption {
