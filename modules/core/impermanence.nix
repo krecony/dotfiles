@@ -25,7 +25,7 @@ in
       assertions = [
         {
           assertion =
-            config.boot.initrd.systemd.enable
+            config.boot.initrd.enable
             && builtins.hasAttr "cryptroot" config.boot.initrd.luks.devices
             &&
               lib.all

@@ -41,7 +41,6 @@ in
     }
     {
       boot = {
-        initrd.systemd.enable = mkDefault true;
         loader = {
           systemd-boot = {
             enable = mkDefault (cfg.bootloader == "systemd-boot");
@@ -76,7 +75,6 @@ in
           "splash"
         ];
         consoleLogLevel = 3;
-        initrd.verbose = mkDefault false;
       };
     })
     (mkIf (cfg.bootloader == "lanzaboote") {
@@ -136,10 +134,7 @@ in
             systemd-boot.enable = mkForce false;
             efi.efiSysMountPoint = mkForce "/efi";
           };
-          initrd.systemd = {
-            enable = mkForce true;
-            tpm2.enable = mkForce true;
-          };
+          initrd.systemd.tpm2.enable = mkForce true;
         };
     })
     (mkIf ((!config.services.displayManager.gdm.enable) && (config.style.displayServer != "headless")) {
