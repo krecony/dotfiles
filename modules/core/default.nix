@@ -14,7 +14,6 @@ in
     ./system.nix
     ./nix.nix
     ./sound.nix
-    ./impermanence.nix
     ./nvidia.nix
     ./boot.nix
     ./bluetooth.nix

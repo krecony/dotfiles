@@ -18,7 +18,7 @@
     user = "krecony";
     flakePath = "/home/krecony/dotfiles";
     boot = {
-      encryptedBootPartition = true;
+      bootloader = "grub";
       quietBoot = true;
     };
 
@@ -30,6 +30,53 @@
       "intellij-idea"
       "cursor"
     ];
+  };
+
+  storage = {
+    enable = true;
+    device = "/dev/nvme0n1";
+    diskName = "nvme0n1";
+    espSize = "512M";
+    espMountOptions = [ "defaults" ];
+    swapSize = "16G";
+    swapPriority = null;
+    hardenMounts = false;
+
+    # Keep the installed GPT labels and partition ordering.
+    partitions = {
+      esp = {
+        name = "esp";
+        label = "esp";
+        priority = 1000;
+      };
+      data = {
+        name = "luks";
+        label = "luks";
+        priority = 9001;
+      };
+    };
+    btrfs = {
+      varLayout = "logs";
+      mountOptions = [
+        "ssd"
+        "compress=zstd"
+        "noatime"
+      ];
+      swapMountOptions = [
+        "compress=no"
+        "noatime"
+        "nodatacow"
+      ];
+      extraFormatArgs = [ "-f" ];
+    };
+    fde = {
+      enable = true;
+      encryptBoot = true;
+      allowDiscards = true;
+      bypassWorkqueues = true;
+      # Preserve the existing provisioning declaration; no LUKS conversion.
+      extraFormatArgs = [ ];
+    };
   };
 
   nix-mineral = {

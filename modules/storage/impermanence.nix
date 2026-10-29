@@ -2,31 +2,22 @@
   config,
   lib,
   pkgs,
+  utils,
   ...
 }:
 let
-  cfg = config.core.impermanence;
+  cfg = config.storage.impermanence;
+  mapper = "/dev/mapper/${config.storage.fde.name}";
+  cryptsetupUnit = "systemd-cryptsetup@${utils.escapeSystemdPath config.storage.fde.name}.service";
 in
 {
-  options.core.impermanence = {
-    enable = lib.mkEnableOption "persist host identity on a disposable Btrfs root";
-    resetRoot = lib.mkEnableOption "replace @root with a blank snapshot on each boot";
-  };
   config = lib.mkMerge [
-    {
-      assertions = [
-        {
-          assertion = !cfg.resetRoot || cfg.enable;
-          message = "Resetting root requires persistence to be enabled.";
-        }
-      ];
-    }
     (lib.mkIf cfg.enable {
       assertions = [
         {
           assertion =
             config.boot.initrd.enable
-            && builtins.hasAttr "cryptroot" config.boot.initrd.luks.devices
+            && builtins.hasAttr config.storage.fde.name config.boot.initrd.luks.devices
             &&
               lib.all
                 (
@@ -34,7 +25,7 @@ in
                   let
                     fs = config.fileSystems.${mountpoint} or { };
                   in
-                  (fs.fsType or "") == "btrfs" && (fs.device or "") == "/dev/mapper/cryptroot"
+                  (fs.fsType or "") == "btrfs" && (fs.device or "") == mapper
                 )
                 [
                   "/"
@@ -44,7 +35,7 @@ in
                   "/persist"
                 ]
             && lib.elem "subvol=@root" config.fileSystems."/".options;
-          message = "This reset profile requires systemd initrd, cryptroot, @root mounted at /, and persistent Btrfs mounts defined by the host Disko layout.";
+          message = "storage.impermanence requires systemd initrd, the configured LUKS mapping, @root at /, and persistent Btrfs mounts.";
         }
       ];
       environment.persistence."/persist" = {
@@ -78,8 +69,8 @@ in
         description = "Restore blank Btrfs root before mounting sysroot";
         requiredBy = [ "sysroot.mount" ];
         before = [ "sysroot.mount" ];
-        after = [ "systemd-cryptsetup@cryptroot.service" ];
-        requires = [ "systemd-cryptsetup@cryptroot.service" ];
+        after = [ cryptsetupUnit ];
+        requires = [ cryptsetupUnit ];
         unitConfig.DefaultDependencies = false;
         serviceConfig = {
           Type = "oneshot";
@@ -93,7 +84,7 @@ in
         script = ''
           set -euo pipefail
           mkdir -p /run/root-reset
-          mount -t btrfs -o subvolid=5 /dev/mapper/cryptroot /run/root-reset
+          mount -t btrfs -o subvolid=5 ${lib.escapeShellArg mapper} /run/root-reset
           trap 'umount /run/root-reset' EXIT
           cd /run/root-reset
           # Fail before changing root if the baseline is missing or writable.

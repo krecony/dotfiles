@@ -9,7 +9,6 @@
   imports = [
     "${inputs.nixos-hardware}/lenovo/thinkpad/p14s/intel" # no gen6 configuration
     (modulesPath + "/installer/scan/not-detected.nix")
-    ./disko.nix
     ./settings.nix
   ];
 

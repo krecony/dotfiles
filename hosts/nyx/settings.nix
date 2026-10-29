@@ -12,10 +12,6 @@
     flakePath = "/home/krecony/dotfiles";
     intel.enable = false;
     boot.bootloader = "lanzaboote";
-    impermanence = {
-      enable = true;
-      resetRoot = true;
-    };
     nvidia = {
       enable = true;
       intelBusId = "PCI:0@0:2:0";
@@ -27,6 +23,24 @@
       "lsfg-vk" # dependency of bottles
     ];
     audio.enableAudioProduction = true;
+  };
+
+  storage = {
+    enable = true;
+    device = "/dev/disk/by-id/nvme-SKHynix_HFS001TFM9X179N_BSEBN75471030CB59";
+    espSize = "2G";
+    swapSize = "16G";
+    fde = {
+      enable = true;
+      tpm2 = {
+        enable = true;
+        measurePcr15 = true;
+      };
+    };
+    impermanence = {
+      enable = true;
+      resetRoot = true;
+    };
   };
 
   gaming.minecraft = {

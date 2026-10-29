@@ -10,7 +10,6 @@ let
 in
 {
   options.core.boot = {
-    encryptedBootPartition = mkEnableOption "legacy GRUB encrypted /boot support (deprecated)";
     bootloader = mkOption {
       type = types.enum [
         "systemd-boot"
@@ -18,7 +17,7 @@ in
         "grub"
         "none"
       ];
-      default = if cfg.encryptedBootPartition then "grub" else "systemd-boot";
+      default = "systemd-boot";
       description = "Bootloader selection; disk encryption is configured separately.";
     };
     pkiBundle = mkOption {
@@ -30,15 +29,6 @@ in
   };
 
   config = mkMerge [
-    {
-      assertions = [
-        {
-          assertion = !cfg.encryptedBootPartition || cfg.bootloader == "grub";
-          message = "Legacy encrypted /boot requires GRUB. Define new layouts in the host's disko.nix.";
-        }
-      ];
-      warnings = optional cfg.encryptedBootPartition "core.boot.diskEncryption is legacy encrypted-/boot support; do not use it for new hosts.";
-    }
     {
       boot = {
         loader = {
@@ -56,7 +46,6 @@ in
           };
           efi = {
             canTouchEfiVariables = mkDefault true;
-            efiSysMountPoint = mkDefault "/boot";
           };
         };
       };
@@ -97,45 +86,6 @@ in
         };
       };
       environment.systemPackages = [ pkgs.sbctl ];
-    })
-    (mkIf cfg.encryptedBootPartition {
-      boot =
-        let
-          grubModules = [
-            "part_gpt"
-            "part_msdos"
-            "fat"
-            "btrfs"
-            "cryptodisk"
-            "luks"
-            "pbkdf2"
-            "gcry_sha256"
-            "gcry_sha512"
-            "normal"
-            "configfile"
-            "linux"
-            "efi_gop"
-            "efi_uga"
-            "gfxterm"
-            "gfxterm_background"
-            "gettext"
-          ];
-          moduleString = concatStringsSep " " grubModules;
-        in
-        {
-          loader = {
-            grub = {
-              enable = mkForce true;
-              device = mkForce "nodev";
-              efiSupport = mkForce true;
-              enableCryptodisk = mkForce true;
-              extraGrubInstallArgs = mkForce [ "--modules=${moduleString}" ];
-            };
-            systemd-boot.enable = mkForce false;
-            efi.efiSysMountPoint = mkForce "/efi";
-          };
-          initrd.systemd.tpm2.enable = mkForce true;
-        };
     })
     (mkIf ((!config.services.displayManager.gdm.enable) && (config.style.displayServer != "headless")) {
       environment.systemPackages = [ pkgs.tuigreet ];

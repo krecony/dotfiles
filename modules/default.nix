@@ -39,6 +39,7 @@ in
     ./preferences
     ./apps
     ./core
+    ./storage
     ./hardening
     ./net
     ./shell

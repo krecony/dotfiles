@@ -9,7 +9,6 @@
   imports = [
     (modulesPath + "/installer/scan/not-detected.nix")
     ./settings.nix
-    ./disko.nix
   ];
 
   boot.initrd.availableKernelModules = [
