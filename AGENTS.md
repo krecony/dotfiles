@@ -35,12 +35,26 @@ You should always verify if new solutions have not arised in the NixOS project a
 - Make sure modules are host-agnostic.
 - Inspect existing modules before creating new ones.
 - Keep changes minimal and targeted.
+- Only modify files and modules directly required by the current request. Do not include adjacent cleanup, moves, or reorganisations merely because they seem beneficial.
+- Leave unrelated configuration in place even when editing the file containing it. For example, a storage refactor must not move display-manager configuration into style modules. Suggest unrelated improvements separately.
+- Keep validation proportional to the change. For behaviour-preserving refactors, prefer existing checks and temporary before/after evaluations. Do not automatically add permanent tests, new flake checks, or test infrastructure; add them only when requested or necessary to cover a concrete risk, and explain that need.
 - Do not commit secrets.
-- After making changes evaluate the validity of the flake and changes by running:
+- After changing Nix configuration evaluate the validity of the flake and changes by running:
     - `nix eval`
     - `nix flake check`
+- For documentation-only changes, review the edited text and diff; Nix evaluation is not required.
 - Never push or rebuild, that is up to the users discretion
 - Always ask before modyfing files motivating why your solutions are appropriate
+
+## Nix style
+- Format Nix code with `nix fmt .`, using the formatter configured in `flake.nix`. Do not invoke `nixfmt` directly or create ad-hoc `nix-shell`/`nix shell` environments for formatting.
+- Inspect `lib/custom.nix` and existing usage before introducing options or helpers. Prefer the repository's custom helpers when they clearly express the intended behaviour.
+- Use `imports = mkImports [ ... ];` for module imports in the repository's module tree, accepting `mkImports` as a module argument. This propagates custom arguments such as `user`, `colors`, and `mkImports` itself. Do not bypass the helper with raw import lists or duplicate its argument-forwarding logic.
+- Use `lib.custom.mkEnableByDefaultOption` for boolean options enabled by default. Do not recreate it with `mkEnableOption ... // { default = true; }` or a redundant option declaration.
+- Use `inherit (cfg.someSection) optionName;` when forwarding values with matching names instead of repeating assignments.
+- Prefer `lib.mkIf` for conditional module definitions and `lib.mkMerge` when combining conditional blocks. Avoid `// lib.optionalAttrs ...` when the same configuration can be expressed clearly with module conditionals.
+- Avoid `lib.optionalAttrs` unless conditional construction of a plain attribute set actually requires it and there is no clearer alternative. Prefer a normal `if ... then ... else ...` when selecting between different plain values or structures.
+- Check the destination option's type before replacing ordinary attribute-set logic with `mkIf`: module conditionals must be consumed by the module system. Preserve option defaults and behaviour when simplifying expressions.
 
 ## Running Executables
 If a binary does not exist in the system path, e.g. `python`. Run it using a nix shell, for example:
