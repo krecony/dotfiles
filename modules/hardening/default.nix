@@ -54,18 +54,19 @@ in
       security = {
         wrappers = mkIf cfg.disableSUIDs (mkMerge [
           {
-            sudoedit.setuid = lib.mkForce false;
-            sg.setuid = lib.mkForce false;
-            mount.setuid = lib.mkForce false;
-            umount.setuid = lib.mkForce false;
+            su.enable = lib.mkForce false;
+            sudoedit.enable = lib.mkForce false;
+            sg.enable = lib.mkForce false;
+            mount.enable = lib.mkForce false;
+            umount.enable = lib.mkForce false;
             pkexec.setuid = lib.mkForce false;
             newgrp.setuid = lib.mkForce false;
           }
           (mkIf config.programs.fuse.enable {
             # these wrappers only exist (with a source) when fuse is enabled,
             # so only override their setuid bit then to avoid a sourceless wrapper
-            fusermount.setuid = lib.mkForce false;
-            fusermount3.setuid = lib.mkForce false;
+            fusermount.enable = lib.mkForce false;
+            fusermount3.enable = lib.mkForce false;
           })
           (mkIf (!config.virtualisation.podman.enable) {
             # for rootless podman
