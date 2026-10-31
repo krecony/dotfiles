@@ -156,8 +156,7 @@
       # anki
       spotify
 
-      # FIXME: wait for vesktop's electron version to be bumped
-      # vesktop # discord client
+      vesktop # discord client
 
       pycharm
       intellij-idea
@@ -210,11 +209,4 @@
   boot.kernelPackages = pkgs.linuxPackages_latest;
 
   apps.podman.enable = true;
-
-  # FIXME: workaround for https://github.com/NixOS/nixpkgs/issues/536623 until it gets fixed
-  nixpkgs.overlays = [
-    (final: _: {
-      pnpm_10_29_2 = final.pnpm_10;
-    })
-  ];
 }
