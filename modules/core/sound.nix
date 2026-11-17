@@ -71,7 +71,5 @@ in
       enable = cfg.enableAudioProduction;
       inherit (cfg) soundcardPciId;
     };
-
-    environment.variables.PIPEWIRE_RUNTIME_DIR = "/run/user/1000";
   };
 }
