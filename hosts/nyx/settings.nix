@@ -171,7 +171,10 @@
   ];
 
   # fingerprint
-  services.fprintd.enable = true;
+  services.fprintd = {
+    enable = true;
+    enablePam = false;
+  };
 
   services.usbguard =
     let
@@ -196,9 +199,6 @@
         ''allow id 0a4d:0090 serial "" hash "aTP/Nuu5NG3FI0jzmIroFrqA61jBi+dxQym+Eoe005I="'' # midi keyboard
       ];
     };
-
-  # reduce time available to auth sudo with fingerprint
-  security.pam.services.sudo.rules.auth.fprintd.settings.timeout = 10;
 
   environment.systemPackages = with pkgs; [
     proton-vpn
