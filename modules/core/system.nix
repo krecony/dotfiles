@@ -91,7 +91,6 @@
         libXft
 
         glib
-        gtk2
       ];
     };
   };
