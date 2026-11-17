@@ -38,7 +38,6 @@ in
       audio.enable = true;
       wireplumber.enable = true;
       pulse.enable = true;
-      jack.enable = cfg.enableAudioProduction;
       alsa = {
         enable = true;
         support32Bit = true;
@@ -51,6 +50,9 @@ in
       ++ (
         if cfg.enableAudioProduction then
           [
+            # Explicitly launch JACK clients with `pw-jack <app>` to use PipeWire
+            # (for example, `pw-jack qjackctl`) instead of a global library override.
+            pipewire.jack
             libjack2
             jack2
             qjackctl
