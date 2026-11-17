@@ -78,6 +78,7 @@
     nix-locate.enable = true;
     podman.enable = true;
     codex.enable = true;
+    tmux.enable = true;
   };
 
   style = {

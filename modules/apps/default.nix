@@ -19,6 +19,7 @@ in
     ./podman.nix
     ./nix-locate.nix
     ./codex.nix
+    ./tmux.nix
   ];
 
   options.settings.userPackages = mkOption {
