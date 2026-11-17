@@ -44,5 +44,6 @@ in
     ./net
     ./shell
     ./style
+    ./extra
   ];
 }
