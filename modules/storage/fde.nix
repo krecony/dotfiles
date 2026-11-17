@@ -31,11 +31,6 @@ in
       (lib.mkIf cfg.fde.tpm2.enable {
         boot.initrd.systemd.tpm2.enable = true;
       })
-      (lib.mkIf cfg.fde.tpm2.measurePcr15 {
-        # FIXME: until https://github.com/NixOS/nixpkgs/pull/581067 gets merged
-        # Since Systemd v262 PCR15 will not get extended without this
-        boot.initrd.systemd.sockets.systemd-pcrextend.wantedBy = [ "sockets.target" ];
-      })
       (lib.mkIf cfg.fde.encryptBoot {
         boot.loader = {
           grub = {
