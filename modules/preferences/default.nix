@@ -34,7 +34,7 @@ in
       default = pkgs.neovim;
     };
 
-    browser = mkApp pkgs.brave;
+    browser = mkApp pkgs.firefox;
     secondaryBrowser = mkApp null;
     pdf = mkApp pkgs.zathura;
     image = mkApp pkgs.imv;
