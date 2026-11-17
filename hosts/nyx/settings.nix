@@ -21,6 +21,7 @@
       "obsidian"
       "espresso"
       "lsfg-vk" # dependency of bottles
+      "osu-lazer-bin"
     ];
     audio.enableAudioProduction = true;
   };
@@ -99,6 +100,9 @@
 
     pianobooster
     linthesia
+
+    osu-lazer-bin
+    ghidra
   ];
 
   hardware.intelgpu.loadInInitrd = false;
